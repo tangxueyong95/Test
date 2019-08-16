@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <!--vuejs的程序入库，声明一个div-->
+    <div id="app">
+        {{message}}<br>
+        {{message1}}<br>
+        {{message1+100}}<br>
+        {{message1>5?'大于5的数':'小于等于5的数'}}
+    </div>
+</body>
+</html>
+<script>
+    var vue = new Vue({
+        el:"#app",// 此时div就被vue所管理，div中的所有内容都可以使用vue的相关对象
+        data:{  // 表示声明的属性，即模型（存值），值可以是字符串类型，基本类型，json类型
+            message:"你好，vue！",
+            message1:10
+        },
+        methods:{ // 表示声明的函数
+
+        }
+    })
+
+    // 绑定的数据对象上属性发生了改变，插值处的内容都会更新
+    vue.message = "你好，传智播客"
+</script>

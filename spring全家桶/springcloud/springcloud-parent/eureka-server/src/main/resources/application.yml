@@ -1,0 +1,17 @@
+server:
+  port: 7001    #端口号
+spring:
+  application:
+    name: eureka-server # 应用名称，会在Eureka中作为服务的id标识（serviceId）
+eureka:
+  client:
+    register-with-eureka: false   #是否将自己注册到Eureka中
+    fetch-registry: false   #是否从eureka中获取服务信息
+    service-url:
+      # EurekaServer的地址
+      defaultZone: http://localhost:7001/eureka
+  server:
+    #关闭自我保护机制
+    enable-self-preservation: false
+    #指定5秒剔除没有心跳的服务
+    eviction-interval-timer-in-ms: 5000

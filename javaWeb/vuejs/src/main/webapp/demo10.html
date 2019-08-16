@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(value,index) in arr">
+                {{value}}--{{index}}
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li v-for="(v,i) in list">
+                {{v.username}}--{{v.age}}--{{i}}
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *2.5v-for
+     用于操作array/集合，遍历
+     demo10.html
+     【需求1】：使用vue赋值list集合，分别存放数组和集合，并把数据遍历到页面上的<li>标签中。
+        List<String> ：  arr:["北京","上海","深圳"]
+        List<User>
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            arr:["北京","上海","深圳"],
+            list:[{username:"张三",age:22},{username:"李四",age:20}]
+        },
+        methods:{
+
+        }
+    })
+</script>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace就是该映射配置文件，对应的接口的全限定名-->
+<!--
+    映射配置文件的小结:
+    1.根标签是mapper标签
+    2.根标签必须有namespace属性，它的值就是对应接口的全限定名
+    3.映射配置文件的路径和名字要和对应接口的一模一样
+    4.一定要到主配置文件中，加载映射配置文件
+    5.映射配置文件中的标签目前有:insert、delete、update、select
+    6.标签的属性:id对应方法名，parameterType对应方法的参数类型，resultType这个是
+    select标签才有的对应方法的返回值类型
+
+
+    映射配置文件的深入:
+    1.parameterType
+      1. 简单数据类型，针对简单数据类型，我们可以不写全限定名，直接使用它内置的别名
+         简单类型既可以使用#{占位符} 也可以使用 '${value}'
+
+      2. POJO类型，我们在指定parameterType的时候，使用该类型的全限定名
+         在SQL语句中传入参数的时候，使用#{属性名}
+         如果POJO类型中有一个属性还是POJO类型，那么我们使用的时候
+         #{属性名.属性名}
+
+
+    2.resultType
+      1. 简单数据类型，我们也可以写别名
+      2. POJO类型，我们就得写成POJO的全限定名，并且要求POJO的属性名要和结果集的字段名一一对应
+         如果封装数据的POJO类型中属性名和数据库表中的字段名对应不上的话，怎么解决?
+         方法一:给查询的结果中的字段取别名,这种方式只能解决POJO的属性是简单类型的情况
+
+         方法二:使用自定义结果集映射resultMap代替resultType(必须掌握，它在以后的多表查询中很重要)
+
+
+-->
+<mapper namespace="mapper.UserMapper">
+    <!--接口中的每一个方法，就对应这里的一个标签-->
+    <!--
+        如果是添加数据的方法，就对应insert标签
+        删除数据的方法，就对应delete标签
+        修改数据的方法就对应update标签
+        查询数据的方法就对应select标签
+
+        标签的id就是对应的方法的方法名
+        标签的parameterType属性，就是方法的参数类型
+        resultType表示结果的类型，但是这个属性只有select标签有
+
+        其它标签的返回值都表示受到影响的行数
+
+        标签体中写SQL语句
+    -->
+    <!--
+        传入的参数是JavaBean的时候，#{JavaBean的属性名}
+    -->
+    <insert id="addUser" parameterType="user">
+      insert into user values (#{id},#{username},#{birthday},#{sex},#{address})
+    </insert>
+    
+    <!--写一个delete标签，对应那个deleteUser-->
+    <delete id="deleteUser" parameterType="int">
+        <!--
+            传入的参数是简单数据类型，那么我们就在#{随便写一个字符串做占位符}
+        -->
+        delete from user where id=#{id}
+    </delete>
+    
+    <!--写一个update标签，对应那个updateUser方法-->
+    <update id="updateUser" parameterType="user">
+        update user set username=#{username},sex=#{sex},address=#{address} where id=#{id}
+    </update>
+
+    <!--
+        写一个select标签，对应findUserById方法
+        返回结果的类型，resultType
+    -->
+    <select id="findUserById" parameterType="int" resultType="user">
+       select * from user where id=#{id}
+    </select>
+
+    <!--
+        写一个select标签，对应findAll方法
+    -->
+    <select id="findAll" resultType="user">
+        select * from user
+    </select>
+
+    <!--
+        写一个select标签，对应findUserByName方法
+
+        在SQL语句中传入参数的时候，如果是简单类型的数据我们使用#{任意字符串}
+        如果写'${value}'
+    -->
+    <select id="findUserByName" parameterType="string" resultType="user">
+        <!--select * from user where username like #{username}-->
+        SELECT * FROM user WHERE username like '%${value}%'
+    </select>
+
+    <!--
+        传入的参数是POJO类型，而且该POJO的属性还是POJO类型
+    -->
+    <select id="findUserByVo" parameterType="string" resultType="user">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+
+    <!--
+        根据id查询username
+    -->
+    <select id="findUsernameById" parameterType="int" resultType="string">
+        select username from user where id=#{id}
+    </select>
+
+
+    <!--
+        自定义一个结果集映射resultMap
+        id是这个结果集映射的唯一表示，用于让其他标签移入该映射
+        type就是该结果集映射对应的POJO类的全限定名
+    -->
+    <!--<resultMap id="userInfoMap" type="userInfo">
+        &lt;!&ndash;
+           id子标签，用于映射主键
+             column属性表示结果集的字段名，property表示POJO的属性名
+        &ndash;&gt;
+        <id column="id" property="userId"></id>
+        &lt;!&ndash;
+            result标签，用于映射其它非主键字段
+        &ndash;&gt;
+        <result column="sex" property="userSex"></result>
+        <result column="birthday" property="userBirthday"></result>
+        <result column="address" property="userAddress"></result>
+    </resultMap>-->
+    <!--
+        查询结果并且封装到UserInfo对象中
+    -->
+    <!--
+        引入自定义映射规则
+    -->
+    <select id="findUserInfoById" parameterType="int" resultType="user">
+        select * from user where id=#{id}
+        <!--select id userId,username,address userAddress, sex userSex,birthday userBirthday from user where id=#{id}-->
+    </select>
+</mapper>

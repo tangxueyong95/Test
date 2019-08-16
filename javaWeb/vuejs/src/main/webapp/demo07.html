@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        {{message}}<br>
+        <div v-text="message"></div><br>
+        <div v-html="message"></div><br>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *2.2v-text与v-html
+     使用{{}}可以输出文本的值。
+     v-text：输出文本内容，不会解析html元素
+     v-html：输出文本内容，会解析html元素
+         demo7.html
+         【需求】：使用message属性赋值“<h1>hello world</h1>”，查看页面输出内容。
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            message:"<font color='red'><h1>你好，vue</h1></font>"
+        },
+        methods:{
+
+        }
+    })
+</script>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        <input type="text" @keydown.enter="fun()"/>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *【需求】：在输入框中，如果输入回车键，就执行弹出窗口事件（可用于网页登录）。
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+//            fun:function (e) {
+//                var keycode = e.keyCode;
+//                if(keycode == 13){
+//                    alert("提交！")
+//                }
+//            }
+            fun:function () {
+                alert("提交！")
+            }
+        }
+    })
+</script>

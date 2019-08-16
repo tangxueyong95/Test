@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd ">
+    <context:component-scan base-package="com"/>
+    <mvc:annotation-driven/>
+    <bean id="viewResolver1" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/><!--不写/就按当前目录下寻找，写了/就按根目录寻找-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--异步请求忽略所有的静态资源，image,css,js（方案一）-->
+    <!--mvc:resources
+        mapping=""：表示访问的资源映射，对应src下的内容js/jquery.min.js，统配：/js/**，js包极其子包中的资源内容
+        location=""：本地的资源路径，webapp下的资源路径
+    -->
+    <!--<mvc:resources mapping="/js/**" location="/js/"></mvc:resources>-->
+    <!--<mvc:resources mapping="/css/**" location="/css/"></mvc:resources>-->
+    <!--<mvc:resources mapping="/image/**" location="/image/"></mvc:resources>-->
+    <!--异步请求忽略所有的静态资源，image,css,js（方案二）-->
+    <mvc:default-servlet-handler/>
+    <!--配置文件解析器组件-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--对上传的文件做大小的限制，单位字节，40*1024（40k）-->
+        <!--<property name="maxUploadSize" value="40960"></property>-->
+    </bean>
+    <!--配置异常处理器-->
+    <bean id="sysExceptionHandler" class="com.exception.SysExceptionHandler"></bean>
+
+
+    <!--配置拦截器-->
+    <!--
+    <mvc:mapping path=""/>：哪些url需要被拦截
+            /interceptor/*：表示拦截/interceptor/*下的连接（只能拦截/interceptor/add、/interceptor/save；不能拦截/interceptor/add/save）
+            /interceptor/**：表示匹配所有
+    <mvc:exclude-mapping path="">：哪些url不需要被拦截
+            /interceptor/save：别的url拦截，但是/interceptor/save不能拦截
+    -->
+    <mvc:interceptors>
+        <!--拦截器的执行是从上往下执行的-->
+        <mvc:interceptor>
+            <!--拦截-->
+            <mvc:mapping path="/interceptor/*"/>
+            <!--不拦截-->
+            <mvc:exclude-mapping path="/interceptor/testInterceptor"></mvc:exclude-mapping>
+            <bean class="com.interceptor.SysInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/interceptor/*"/>
+            <!--<mvc:exclude-mapping path="/interceptor/save"></mvc:exclude-mapping>-->
+            <bean class="com.interceptor.SysInterceptor2"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
+
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2017-12-29-JQuery案例之抽奖程序</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+<!-- 小像框 -->
+<div style="border-style:dotted;width:100px;height:100px">
+    <img id="img1ID" src="" style="width:100px;height:100px"/>
+</div>
+<!-- 大像框 -->
+<div
+        style="border-style:double;width:500px;height:500px;position:absolute;left:500px;top:10px">
+    <img id="img2ID" src="" style="width:500px;height:500px"/>
+</div>
+<!-- 开始按钮 -->
+<input
+        id="startID"
+        type="button"
+        value="点击开始"
+        style="width:150px;height:150px;font-size:22px"
+        onclick="imgStart()">
+
+<!-- 停止按钮 -->
+<input
+        id="stopID"
+        type="button"
+        value="点击停止"
+        style="width:150px;height:150px;font-size:22px"
+        onclick="imgStop()"
+        disabled="disabled">
+
+<script language='javascript' type='text/javascript'>
+    //准备一个一维数组，装用户的像片路径
+    var imgs = [
+        "../img/man00.jpg",
+        "../img/man01.jpg",
+        "../img/man02.jpg",
+        "../img/man03.jpg",
+        "../img/man04.jpg",
+        "../img/man05.jpg",
+        "../img/man06.jpg"
+    ];
+    //抽奖案例的流程
+    //1.点击开始按钮，让小相框很快速地切换图片
+    //声明一个开始抽奖的方法
+    function imgStart() {
+        i = 0;
+        //让小相框很快速地切换图片
+        //设置小相框的src就是切换图片，怎么做到很快速切换呢?使用setInterval()定时器，设置间隔时间很短很短
+        itvId = setInterval(function () {
+            i ++
+            if (i == 7) {
+                i = 0
+            }
+            //切换小相框的图片
+            $("#img1ID").attr("src",imgs[i])
+        },50);
+
+        //为了避免用户反复点击开始按钮
+        //当点击了开始按钮之后，让开始按钮失效
+        $("#startID").prop("disabled",true)
+        //让停止按钮不失效
+        $("#stopID").prop("disabled",false)
+    }
+
+    //声明一个停止抽奖的方法
+    function imgStop() {
+        //停止抽奖是:1.就是清除定时器  2.让大相框显示停止时候的图片
+        clearInterval(itvId)
+        $("#img2ID").attr("src",imgs[i])
+        //让停止按钮失效，开始按钮生效
+        $("#startID").prop("disabled",false)
+        $("#stopID").prop("disabled",true)
+    }
+</script>
+</body>
+</html>

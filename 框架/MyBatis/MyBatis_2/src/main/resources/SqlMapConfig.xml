@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="jdbcinfo.properties">
+        <property name="user" value="root"/>
+    </properties>
+    <settings>
+
+        <!--开启缓存-->
+        <setting name="cacheEnabled" value="true" />
+
+        <!--开启延迟加载-->
+
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--当开启时，任何方法的调用都会加载该对象的所有属性。否则，每个属性会按需加载-->
+        <setting name="aggressiveLazyLoading" value="false" />
+
+    </settings>
+    <typeAliases>
+        <package name="domain"/>
+    </typeAliases>
+    <!--1.声明当前JDBC的环境-->
+    <environments default="mysql">
+        <!--
+            每一个environment标签就是一种环境
+        -->
+        <environment id="mysql">
+            <!--
+                事务管理者，默认写成JDBC就可以了
+            -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--
+                数据源，他总共有三种取值:
+                POOLED表示使用自带的连接池
+                UNPOOLED表示不使用连接池
+                JNDI表示使用JNDI的连接池
+            -->
+            <dataSource type="POOLED">
+                <!--配置基础环境-->
+                <property name="username" value="${user}"></property>
+                <property name="password" value="${password}"></property>
+                <property name="url" value="${url}"></property>
+                <property name="driver" value="${driver}"></property>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <package name="mapper"></package>
+    </mappers>
+</configuration>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+
+	</head>
+	<script src="../js/jquery-3.3.1.js"></script>
+	<script>
+		$(function () {
+            $("#addAll").click(function () {
+                //全部添加，将左边所有的option添加到右边
+                $("#selectRight").append($("#selectLeft option"))
+            })
+
+            //给添加选中按钮，绑定事件
+            $("#add").click(function () {
+                //将左边选中的option添加到右边
+                $("#selectRight").append($("#selectLeft :selected"))
+            })
+
+            //给移除所有添加点击事件
+            $("#removeAll").click(function () {
+                //将右边所有的option添加到左边
+                $("#selectLeft").append($("#selectRight option"))
+            })
+            //给移除选中绑定点击事件
+            $("#remove").click(function () {
+                //将右边所有选中的option添加到左边
+                $("#selectLeft").append($("#selectRight :selected"))
+            })
+
+            //鼠标移入左边的select的时候，给左边所有的option绑定双击事件
+            $("#selectLeft").focus(function () {
+                //完成双击某个option进行添加和移出
+                //1.给左边所有的option绑定双击事件，双击的时候将双击的这个option添加到右边
+                $("#selectLeft option").dblclick(function () {
+                    //将当前触发事件的标签添加到右边
+                    $("#selectRight").append(this)
+                })
+            })
+
+            //鼠标移入的时候，才给右边所有的option绑定双击事件
+            $("#selectRight").focus(function () {
+                //2.给右边所有的option添加双击事件，双击的时候将双击的这个标签添加到左边
+                $("#selectRight option").dblclick(function () {
+                    $("#selectLeft").append(this)
+                })
+            })
+        })
+	</script>
+	<body>
+		<table border="1" width="400" align="center">
+			<tr>
+				<td>
+					分类名称
+				</td>
+				<td>
+					<input type="text" name="cname" value="手机数码"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					分类描述
+				</td>
+				<td>
+					<textarea name="cdesc" rows="4" cols="20">手机数码类商品</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					分类商品
+				</td>
+				<td>
+					<span style="float: left;">
+						已有商品<br/>
+						<select id="selectLeft" multiple>
+							<option>IPhone6s</option>
+							<option>小米4</option>
+							<option>锤子T2</option>
+						</select>
+						<p><a href="#" id="add">添加选中</a></p>
+						<p><a href="#" id="addAll">添加全部</a></p>
+					</span>
+					<span style="float: right;">
+						未有商品<br/>
+						<select id="selectRight" multiple="multiple">
+							<option>三星Note3</option>
+							<option>华为6s</option>
+						</select>
+						<p><a href="#" id="remove">移除选中</a></p>
+						<p><a href="#" id="removeAll">移除全部</a></p>
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type='submit' value="修改"/>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/context
+                          http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--开启注解IOC和DI的支持，组件的扫描，扫描java包及其子包中的所有类，都可以使用@Component，@Controller，@Service，@Repository-->
+    <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="dao"/>
+    <context:component-scan base-package="service"/>
+    <!--查找外部的资源文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+    <!--创建第三方的对象，QueryRunner和DataSource-->
+    <!--创建DataSource-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--创建QueryRunner，并注入数据源（使用数据源去创建Connection）-->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <constructor-arg name="ds" ref="dataSource"></constructor-arg>
+    </bean>
+
+</beans>

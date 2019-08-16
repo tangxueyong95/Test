@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.health.dao.CheckItemDao">
+
+    <!--新增检查项-->
+    <insert id="add" parameterType="checkItem">
+        insert into t_checkItem(code,name,sex,age,price,type,remark,attention) values (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
+    </insert>
+
+    <!--分页查询检查项，必须名称需要使用value-->
+    <select id="findPage" parameterType="string" resultType="checkItem">
+        select * from t_checkItem
+        <if test="value!=null and value.length>0">
+            where code = #{value} or name = #{value}
+        </if>
+    </select>
+
+    <!--删除检查项-->
+    <delete id="deleteById" parameterType="int">
+        delete from t_checkItem where id = #{id}
+    </delete>
+
+    <!--使用检查项id，查询检查项和检查组的中间表，获取查询的数量-->
+    <select id="findCountByCheckItemId" parameterType="int" resultType="long">
+        SELECT COUNT(*) FROM t_checkgroup_checkitem WHERE checkitem_id = #{id}
+    </select>
+
+    <!--使用主键ID，查询检查项对象-->
+    <select id="findById" parameterType="int" resultType="checkItem">
+        select * from t_checkItem where id = #{id}
+    </select>
+
+    <!--更新检查项信息-->
+    <update id="edit" parameterType="checkItem">
+        <!--update t_checkItem set code=#{code},name=#{name},sex=#{sex},age=#{age},price=#{price},type=#{type},remark=#{remark},attention=#{attention} where id=#{id}-->
+        update t_checkItem
+        <set>
+            <if test="code!=null">
+                code=#{code},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="sex!=null">
+                sex=#{sex},
+            </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="price!=null">
+                price=#{price},
+            </if>
+            <if test="type!=null">
+                type=#{type},
+            </if>
+            <if test="remark!=null">
+                remark=#{remark},
+            </if>
+            <if test="attention!=null">
+                attention=#{attention},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--查询所有检查项-->
+    <select id="findAll" resultType="checkitem">
+        select * from t_checkitem
+    </select>
+    <!--使用检查组id，查询检查项的集合-->
+    <select id="findCheckItemListById" resultType="checkItem" parameterType="int">
+          SELECT * FROM t_checkitem c WHERE c.id IN (SELECT checkitem_id FROM t_checkgroup_checkitem WHERE checkgroup_id = #{id})
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ssm.dao.CustDao">
+    <select id="Fandall" resultType="ssm.domain.Cust">
+        SELECT * FROM `s_cust`,`s_user` WHERE `s_cust`.`cust_link_user`=`s_user`.`uid` and s_cust.cust_name like "%"#{custName}"%" and s_cust.cust_type like "%"#{custType}"%"
+        <!--<where>
+            <if test="custName != null and custName != ''">
+                and s_cust.cust_name like "%"#{custName}"%"
+            </if>
+            <if test="custType != null and custType != ''">
+                and s_cust.cust_type like "%"#{custType}"%"
+            </if>
+        </where>-->
+    </select>
+    <delete id="deleteCust" parameterType="int">
+        delete FROM `s_cust` WHERE cid =#{cid}
+    </delete>
+</mapper>

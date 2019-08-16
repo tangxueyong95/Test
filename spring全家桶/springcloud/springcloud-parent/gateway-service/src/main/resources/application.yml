@@ -1,0 +1,43 @@
+# 注释版本
+server:
+  port: 18084
+spring:
+  application:
+    # 应用名
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+      #根据用户请求的路径判断
+      #如果是以/user/**(以/user/开始的请求)，将请求路由到user-provider处理
+        #唯一标示
+        - id: user-route-service
+          #路由的地址,真实处理用户请求的路由地址
+          #uri: http://localhost:18081
+          #lb:动态路由，具备负载均衡能力
+          #user-provider:表示要路由的服务名字，和对应服务的spring.application.name保持一致
+          uri: lb://user-consumer
+          #路由断言：路由判断规则
+          predicates:
+            #路径以 /user/开始的请求  /**:表示无限极任意请求路径
+#            - Path=/user/**
+            - Path=/**
+#          filters:
+#            #会在路由的路径前面加个前缀 /user
+#            #- PrefixPath=/user
+#            #除去请求路径中的第一个路径(根据/识别一个路径 http://localhost:18084/api/user/2)
+#            #请求http://localhost:18084/api/user/2  将第1个/api去掉
+#            #去掉第1个路径   2：会去掉前面2个路径
+#            - StripPrefix=1
+#            - MyParam=name
+
+#      default-filters:
+#        #使用AddResponseHeader过滤器，添加一个同文件信息
+#        - AddResponseHeader=X-Response-Default-MyName,itheima
+
+# Eureka服务中心配置
+eureka:
+  client:
+    service-url:
+      # 注册Eureka Server集群
+      defaultZone: http://127.0.0.1:7001/eureka

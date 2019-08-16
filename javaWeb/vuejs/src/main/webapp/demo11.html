@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        <table border="1">
+            <tr>
+                <td>序号</td>
+                <td>商品ID</td>
+                <td>商品名称</td>
+                <td>商品价格</td>
+            </tr>
+            <tr v-for="(p,i) in products">
+                <td>{{i+1}}</td>
+                <td>{{p.id}}</td>
+                <td>{{p.name}}</td>
+                <td>{{p.price}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *【需求2】：使用vue赋值json数据，并把数据遍历到页面上的<table>里的<tr>标签中。
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            products:[{
+                id:10,
+                name:"华为手机",
+                price:1000
+            },{
+                id:20,
+                name:"vivo手机",
+                price:2000
+            }]
+        },
+        methods:{
+
+        }
+    })
+</script>

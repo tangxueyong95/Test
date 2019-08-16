@@ -1,0 +1,10 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/spring?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+time:
+  delay: 5000

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:pi="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--5.2 构造函数注入
+        constructor-arg：构造方法注入
+            name：按照名称注入（用的最多）
+            type；按照类型注入
+            index：在构造方法中，可以使用构造方法的位置索引，从0开始，0表示第1个参数
+
+            value：值的注入（字符串，基本数据类型）
+            ref：表示对象的注入，需要由容器去创建对象，将创建对象id放置进去，表示注入一个对象
+    -->
+    <!--<bean id="accountService" class="service.impl.AccountServiceImpl">
+        <constructor-arg name="name" value="冯小刚"></constructor-arg>
+        <constructor-arg name="age" value="50"></constructor-arg>
+        <constructor-arg name="birthday" ref="date"></constructor-arg>
+    </bean>-->
+    <bean id="date" class="java.util.Date"/>
+    <bean id="accountService" class="service.impl.AccountServiceImpl">
+        <constructor-arg index="0" value="冯小刚"/>
+        <constructor-arg type="java.lang.Integer" value="50"/>
+        <constructor-arg name="birthday" ref="date"/>
+    </bean>
+
+    <!--
+        5.3 set方法注入 （推荐使用）
+            property：set方法注入
+                name=""：set方法的名称
+
+                value：值的注入（字符串，基本数据类型）
+                ref：表示对象的注入，需要由容器去创建对象，将创建对象id放置进去，表示注入一个对象
+       -->
+    <!--<bean id="accountService2" class="service.impl.AccountServiceImpl2">-->
+        <!--<property name="name" value="谢娜"></property>-->
+        <!--<property name="age" value="40"></property>-->
+        <!--<property name="birthday" ref="date"></property>-->
+    <!--</bean>-->
+
+    <!--5.4 使用p名称空间注入数据（本质还是调用set方法）-->
+    <!--<bean id="accountService2" class="service.impl.AccountServiceImpl2" pi:name="何炅" pi:age="40" pi:birthday-ref="date">-->
+    <!--</bean>-->
+    <!--<bean id="accountService2" class="service.impl.AccountServiceImpl2">
+        <property name="name" value="谢娜"/>
+        <property name="age" value="40"/>
+        <property name="birthday" ref="date"/>
+    </bean>-->
+    <bean id="accountService2" class="service.impl.AccountServiceImpl2" pi:name="谢娜" pi:age="40" pi:birthday-ref="date"/>
+    <!--5.5 注入集合属性（复杂类型）-->
+    <bean id="accountService3" class="service.impl.AccountServiceImpl3">
+        <!--数组-->
+        <!--在spring的集合注入中，array，list，set是可以通用的-->
+        <property name="arrays">
+            <array>
+                <value>张三</value>
+                <value>30</value>
+                <value>李四</value>
+                <value>40</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>王五</value>
+                <value>50</value>
+                <ref bean="date"/>
+            </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="name" value="赵六"/>
+                <entry key="age">
+                    <value>20</value>
+                </entry>
+                <entry key="data" value-ref="date"/>
+                <entry key="date2">
+                    <ref bean="date"/>
+                </entry>
+            </map>
+        </property>
+        <property name="set">
+            <set>
+                <value>123</value>
+                <value>哈哈</value>
+                <ref bean="date"/>
+            </set>
+        </property>
+        <!--properties集合，和map集合很相似，也是键值对，键和值只能是String-->
+        <!--集合属性的应用场景：初始化系统中使用常量-->
+        <property name="properties">
+            <props>
+                <prop key="driver">com.mysql.jdbc.Driver</prop>
+                <prop key="url">jdbc:mysql:///day</prop>
+                <prop key="username">root</prop>
+                <prop key="password">root</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

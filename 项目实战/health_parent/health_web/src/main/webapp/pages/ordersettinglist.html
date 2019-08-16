@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>传智健康</title>
+    <meta name="description" content="传智健康">
+    <meta name="keywords" content="传智健康">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="hold-transition">
+<div id="app">
+    <div class="content-header">
+        <h1>预约管理
+            <small>预约列表</small>
+        </h1>
+        <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>预约管理</el-breadcrumb-item>
+            <el-breadcrumb-item>预约列表</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    <div class="app-container">
+        <div class="box">
+            <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
+                <el-table-column type="index" align="center" label="序号"></el-table-column>
+                <el-table-column prop="name" label="姓名" align="center"></el-table-column>
+                <el-table-column prop="orderDate" label="日期" align="center"></el-table-column>
+                <el-table-column prop="orderType" label="预约类型" align="center"></el-table-column>
+                <el-table-column prop="orderStatus" label="就诊状态" align="center"></el-table-column>
+                <el-table-column prop="setmealName" label="套餐名" align="center"></el-table-column>
+                <el-table-column label="操作" align="center">
+                    <template slot-scope="scope">
+                        <el-button id="btn"  size="mini" @click="updateStatus(scope.row)">就诊</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="pagination-container">
+                <el-pagination
+                        class="pagiantion"
+                        @current-change="handleCurrentChange"
+                        :current-page="pagination.currentPage"
+                        :page-size="pagination.pageSize"
+                        layout="total, prev, pager, next, jumper"
+                        :total="pagination.total">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/vue.js"></script>
+<script src="../plugins/elementui/index.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            pagination: {//分页相关模型数据
+                currentPage: 1,//当前页码
+                pageSize: 2,//每页显示的记录数
+                total: 0,//总记录数
+                queryString: null//查询条件
+            },
+            dataList: [],//当前页要展示的分页列表数据
+        },
+        //钩子函数，VUE对象初始化完成后自动执行
+        created() {
+            this.findPage();
+        },
+        methods: {
+            updateStatus(row) {
+                //alert(row.name)
+                this.$confirm('该会员是否已完成就诊', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    center: true
+                }).then(() => {
+
+                    axios.get("/orderSettingList/update.do?id=" + row.id).then((response) => {
+                        if (response.data.flag) {
+                            vue.$message({
+                                type: 'success',
+                                message: response.data.message
+                            });
+                            //vue.isDisabled="true"
+                        } else {
+                            vue.$message.error(response.data.message);
+                        }
+                    }).catch((error) => {
+                    }).finally(() => {
+                        vue.findPage();
+                    })
+                    this.isDisabled=true
+                })
+            },
+            //分页查询
+            findPage() {
+                // 使用axios，查询数据，传递QueryPageBean，响应PageResult
+                var params = {
+                    "currentPage": this.pagination.currentPage,
+                    "pageSize": this.pagination.pageSize,
+                    "queryString": this.pagination.queryString
+                };
+                axios.post("/orderSettingList/findPage.do", params).then((response) => {
+                    vue.pagination.total = response.data.total;
+                    vue.dataList = response.data.rows;
+
+                }).catch((error) => {
+
+                })
+            },
+            //切换页码
+            handleCurrentChange(currentPage) {
+                // alert(currentPage);
+                // 调用方法之前，改变当前页
+                this.pagination.currentPage = currentPage;
+                this.findPage();
+            }
+        }
+    })
+</script>
+</html>

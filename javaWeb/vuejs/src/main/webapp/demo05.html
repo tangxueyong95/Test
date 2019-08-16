@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        <form v-on:submit.prevent action="http://www.itcast.cn">
+            <input type="submit" value="提交"/>
+        </form>
+        <hr>
+        <div @click="fun1()">
+            <a @click.stop href="http://www.itheima.com">黑马程序员</a>
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *demo5.html
+     【需求】：在表单中，点击“提交”按钮，阻止执行（.prevent）；在超链接中，点击url，阻止上一层事件执行（.stop）
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+//            fun:function (e) {
+//                e.preventDefault(); // 阻止当前时间
+//            }
+            fun1:function () {
+                alert("我是div");
+            },
+//            fun2:function (e) {
+//                e.stopPropagation(); // 阻止上一层事件
+//            }
+        }
+    })
+</script>

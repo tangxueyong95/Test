@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<body>
+    <div id="app">
+        <el-dropdown>
+              <span class="el-dropdown-link">
+                下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item icon="el-icon-plus">退出系统</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-circle-plus" disabled>修改密码</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-circle-plus-outline" divided>联系管理员</el-dropdown-item>
+                </el-dropdown-menu>
+        </el-dropdown>
+        <hr>
+        <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item icon="el-icon-plus">退出系统</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-circle-plus" disabled>修改密码</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-circle-plus-outline" divided>联系管理员</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+        <hr>
+        <el-dropdown split-button trigger="click">
+              <span class="el-dropdown-link">
+                下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item icon="el-icon-plus">退出系统</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-circle-plus" disabled>修改密码</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-circle-plus-outline" divided>联系管理员</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+    </div>
+</body>
+</html>
+<script>
+    var vue = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+
+        }
+    })
+</script>
+<style>
+    .el-dropdown-link {
+        cursor: pointer;
+        color: #409EFF;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
+    .demonstration {
+        display: block;
+        color: #8492a6;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+</style>

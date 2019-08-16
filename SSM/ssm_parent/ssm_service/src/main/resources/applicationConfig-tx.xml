@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                   http://www.springframework.org/schema/beans/spring-beans.xsd
+                   http://www.springframework.org/schema/aop
+                   http://www.springframework.org/schema/aop/spring-aop.xsd
+                   http://www.springframework.org/schema/tx
+                   http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <tx:advice id="myAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="insert*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="update*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="delete*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="edit*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="*" read-only="true"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="myPointcut" expression="execution(* com..*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="myAdvice" pointcut-ref="myPointcut"></aop:advisor>
+    </aop:config>
+</beans>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        <font v-bind:color="ys1">传智播客</font><br>
+        <font :color="ys2">黑马程序员</font><br>
+        <hr>
+        <a v-bind={href:"http://www.itheima.com"+info}>黑马程序员</a>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *2.3v-bind
+     插值语法不能作用在 HTML 属性上，遇到这种情况应该使用 v-bind指令
+     demo8.html
+         【需求】：使用vue定义属性ys，对页面中的字体标签<font>赋值颜色（color）。
+         使用vue定义属性info，对页面中的超链接<a>传递参数（href）。
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            ys1:"red",
+            ys2:"blue",
+            info:"/special/hmjavaeezly"
+        },
+        methods:{
+
+        }
+    })
+</script>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--1：组件扫描
+        让SpringMVC只扫描Controller，不扫描Service
+    -->
+    <context:component-scan base-package="com.ssm">
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>-->
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"></context:exclude-filter>-->
+    </context:component-scan>
+    <!--2：注解驱动。开启处理器映射器，处理器适配器-->
+    <mvc:annotation-driven/>
+    <!--3：视图解析器（index.jsp跳转到sucess.jsp-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!--4：忽略静态资料路径-->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <!--5:引入其他spring的配置，当web容器启动的时候，加载springmvc.xml，同时加载了applicationContext.xml-->
+    <import resource="classpath:applicationContext.xml"></import>
+</beans>

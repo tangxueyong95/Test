@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<script src="js/axios-0.19.0.js"></script>
+<body>
+    <div id="app">
+
+    </div>
+</body>
+</html>
+<script>
+    /**
+     * 【需求】：创建data/user.json文件
+     使用axios读取user.json文件的内容，并在页面上输出内容。
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+            init:function () {
+                axios.get("./data/user.json").then(function (res) {
+                    alert(res);
+                    console.log(res);
+                    alert(res.data); // json对象
+                    alert(JSON.stringify(res.data));// json对象转化成json字符串
+
+                }).catch(function (error) {
+
+                }).finally(function () {
+                    
+                })
+            }
+        },
+        created:function () {
+            this.init();
+        }
+    })
+</script>

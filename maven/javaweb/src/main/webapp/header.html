@@ -1,0 +1,93 @@
+<script src="js/getParameter.js"></script>
+<script>
+    //向服务器发送异步请求，获取当前登录的用户信息
+    $.post("user","action=getUserInfo",function (result) {
+        if (result.flag) {
+            //获取成功
+            //拿出用户信息
+            var data = result.data;
+            if (data != null) {
+                //用户已登录
+                $(".shortcut").append("<!-- 登录状态  -->\n" +
+                    "            <div class=\"login\">\n" +
+                    "            \t\n" +
+                    "                <span>欢迎回来，"+data.name+"</span>\n" +
+                    "                <a href=\"myfavorite.html\" class=\"collection\">我的收藏</a>\n" +
+                    "                <a href=\"user?action=logout\">退出</a>\n" +
+                    "            </div>")
+            }else {
+                //用户未登录
+                $(".shortcut").append("<!-- 未登录状态  -->\n" +
+                    "            <div class=\"login_out\">\n" +
+                    "                <a href=\"login.html\">登录</a>\n" +
+                    "                <a href=\"register.html\">注册</a>\n" +
+                    "            </div>")
+            }
+        }
+    },"json")
+
+    //获取所有分类信息
+    $.post("category","action=findAll",function (result) {
+        var data = result.data;//获取所有分类的json对象的数组
+        //使用js里面的一个方法，eval()方法，将json字符串转换成js的对象
+        data = eval("("+data+")")
+        console.log(data)
+        //遍历出每一个分类对象
+        $.each(data,function (index, element) {
+            //每遍历出一个分类信息，我们就添加一个li标签
+            //element是分类信息
+            $(".nav").append("<li><a href=\"route_list.html?cid="+element.cid+"&currentPage=1\">"+element.cname+"</a></li>")
+        })
+        //遍历完成之后，拼接收藏排行榜的信息
+        $(".nav").append("<li><a href=\"favoriterank.html\">收藏排行榜</a></li>")
+    },"json")
+    
+    
+    //声明一个搜索的方法
+    function searchRoute() {
+        //跳转到route_list.html页面
+        var cid = getParameter("cid");
+        location.href = "route_list.html?cid="+cid+"&currentPage=1&keyword="+$("#keyword").val()
+    }
+</script>
+<!-- 头部 start -->
+    <header id="header">
+        <div class="top_banner">
+            <img src="images/top_banner.jpg" alt="">
+        </div>
+        <div class="shortcut">
+
+
+
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <a href="/"><img src="images/logo.jpg" alt=""></a>
+                </div>
+                <div class="search">
+                    <input id="keyword" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                    <a href="javascript:;" class="search-button" onclick="searchRoute()">搜索</a>
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <img src="images/hot_tel.jpg" alt="">
+                    </div>
+                    <div class="hot_tel">
+                        <p class="hot_time">客服热线(9:00-6:00)</p>
+                        <p class="hot_num">400-618-9090</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部 end -->
+     <!-- 首页导航 -->
+    <div class="navitem">
+        <ul class="nav">
+            <li class="nav-active"><a href="index.html">首页</a></li>
+
+
+        </ul>
+    </div>
+    

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        {{message}}<br>
+        <!--<input type="button" value="提交" v-on:click="fun('传智播客')"/>-->
+        <input type="button" value="提交" @click="fun('传智播客')"/>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     * 2.1.1v-on:click（等同于@click）
+         demo2.html
+        【需求】：点击按钮事件，改变message的值
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            message:"你好，vue"
+        },
+        methods:{
+            fun:function (m) {
+                //vue.message = "你好，传智播客"
+                //vue.message = "你好,"+m;
+                // 在method中使用this，表示vue对象对象
+                this.message = "你好："+m;
+            }
+        }
+    })
+
+
+</script>

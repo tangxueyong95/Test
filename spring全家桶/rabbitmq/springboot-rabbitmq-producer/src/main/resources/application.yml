@@ -1,0 +1,7 @@
+spring:
+  rabbitmq:
+    host: localhost
+    password: admin
+    username: admin
+    port: 5672
+    virtual-host: /szitheima

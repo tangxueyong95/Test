@@ -1,0 +1,30 @@
+server:
+  port: 18081
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/spring?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+  application:
+    name: user-provider
+#注册过程
+#1.引入依赖包
+#2.配置Eureka服务地址
+#3.开启Eureka客户端发现功能,只需要在启动类上添加一个注解@EnableEurekaClient|@EnableDiscoveryClient
+eureka:
+  client:
+    service-url:
+      # EurekaServer的地址
+      defaultZone: http://localhost:7001/eureka
+#    #抓取数据的周期
+#    registry-fetch-interval-seconds: 30
+#  instance:
+#    #指定IP地址
+#    ip-address: 127.0.0.1
+#    #访问服务的时候，推荐使用IP
+#    prefer-ip-address: true
+#    #租约到期，服务时效时间，默认值90秒
+#    lease-expiration-duration-in-seconds: 10
+#    #租约续约间隔时间，默认30秒
+#    lease-renewal-interval-in-seconds: 10

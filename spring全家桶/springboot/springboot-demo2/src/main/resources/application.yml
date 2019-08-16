@@ -1,0 +1,28 @@
+#yaml文件
+#将配置以树节点的方式配置展示
+#编写对象，给指定对象赋值的时候，直接将对象的名字作为key
+#如果是给指定对象的子节点赋值，那么换行并且在之前的基础上加2个空格
+#在要赋值的节点后面，加冒号加1个空格加要赋值的数据
+server:
+  port: 18081
+  servlet:
+    context-path: /springboot
+
+
+#自定义
+uname: wangwu
+userage: 26
+
+#数组/List集合
+#address:
+#  sz
+#  tj
+#  hz
+address: shenzhen,shanghai,beijing
+
+
+#user赋值
+user:
+  id: 123
+  address: shanghai
+  name: wangliu

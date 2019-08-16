@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<style>
+    #div{
+        background: red;
+    }
+    #div2{
+        background: blue;
+    }
+</style>
+<body>
+    <div id="app">
+        <div id="div" style="width: 80%;height: 60%" v-on:click="fun()">
+            12345
+            <div id="div2" style="width: 80%;height: 60%" v-on:click="fun2()">
+                11111
+                <textarea style="width: 50%;height: 50%" v-on:click="fun1($event)">67890</textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *2.1.3v-on:mouseover
+     鼠标移入区域事件
+         demo4.html
+         【需求1】：给指定区域大小的div中添加样式，鼠标移到div中，弹出窗口。
+         【需求2】：在div中添加<textarea>，鼠标移动到<textarea>，再弹出一个窗口
+         【需求3】：阻止上一层事件的执行
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+            fun:function () {
+                alert("我是div...");
+            },
+            fun2:function () {
+                alert("我是div2...");
+            },
+            fun1:function (e) {
+                alert("我是textarea...");
+                //e.stopPropagation(); // 阻止嵌套事件中的上一层事件执行
+            }
+        }
+    })
+</script>

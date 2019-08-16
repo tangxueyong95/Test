@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd ">
+    <!--第一步：组件的扫描,springmvc一定在控制类里使用@Controller-->
+    <context:component-scan base-package="com.itheima"></context:component-scan>
+    <!--* 1大组件，处理器映射器-->
+    <!--* 2大组件，处理器适配器-->
+    <!--第二步：配置mvc的注解驱动开发，通过驱动的方式，自动加载处理器映射器、处理器适配器等-->
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+    <!--第三步：配置视图解析器；3大组件，不使用ajax数据跳转响应的时候，使用视图解析器-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--prefix前缀：结果视图的响应，到哪个文件夹下-->
+        <!--suffix后缀：结果视图的响应，响应文件的后缀，是哪个jsp，通过Controller类中的返回值指定-->
+        <property name="prefix" value="/"></property><!--不写/就按当前目录下寻找，写了/就按根目录寻找-->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--配置自定义类型转换，converters配置多个类型转换类-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.itheima.convertor.StringToDateConvertor"></bean>
+            </set>
+        </property>
+    </bean>
+    <!--忽略所有的静态资源，image,css,js（方案一）-->
+    <!--mvc:resources
+        mapping=""：表示访问的资源映射，对应src下的内容js/jquery.min.js，统配：/js/**，js包极其子包中的资源内容
+        location=""：本地的资源路径，webapp下的资源路径
+    -->
+    <!--<mvc:resources mapping="/js/**" location="/js/"></mvc:resources>-->
+    <!--<mvc:resources mapping="/css/**" location="/css/"></mvc:resources>-->
+    <!--<mvc:resources mapping="/image/**" location="/image/"></mvc:resources>-->
+    <!--忽略所有的静态资源，image,css,js（方案二）-->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+</beans>
+
+

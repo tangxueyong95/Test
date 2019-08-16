@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                   http://www.springframework.org/schema/beans/spring-beans.xsd
+                   http://www.springframework.org/schema/context
+                   http://www.springframework.org/schema/context/spring-context.xsd
+                   http://www.springframework.org/schema/aop
+                   http://www.springframework.org/schema/aop/spring-aop.xsd
+                   http://www.springframework.org/schema/tx
+                   http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--注解方式IOC和DI
+        context:exclude-filter：排除
+            type="annotation"：注解
+            expression="org.springframework.stereotype.Controller"：控制层的Controller注解
+    -->
+    <!--<context:component-scan base-package="com.ssm">-->
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>-->
+    <!--</context:component-scan>-->
+    <!--spring整合mybatis-->
+    <!--1：数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql:///day_1"></property>
+        <property name="user" value="root"></property>
+        <property name="password" value="root"></property>
+    </bean>
+    <!--2：创建SqlSessionFactoryBean，这是mybatis整合spring的核心-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--(1)数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--(2)表示加载mybatis的核心配置文件-->
+        <!--<property name="configLocation" value="classpath:sqlMapperConfig.xml"></property>-->
+        <!--(3)表示加载mybatis的映射文件-->
+        <!--<property name="mapperLocations">-->
+            <!--<set>-->
+                <!--<value>classpath:com/ssm/dao/AccountDao.xml</value>-->
+            <!--</set>-->
+        <!--</property>-->
+        <!--(4)加载别名（使用映射文件配置的时候，可以使用别名-->
+        <!--<property name="typeAliasesPackage" value="com.ssm.domain"></property>-->
+    </bean>
+    <!--3：创建MapperScannerConfiguration，扫描所有的Dao接口，让Dao接口可以被Spring管理-->
+    <bean id="accountDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.ssm.dao.AccountDao"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean class="com.ssm.service.impl.AccountServiceImpl" id="accountService">
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+    <!--spring的声明式事务处理-->
+    <!--1：事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--2：切入点方法的细化（通知：关联事务）-->
+    <tx:advice id="myAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="insert*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="update*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="delete*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="edit*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="*" read-only="true"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+    <!--3:aop，定义切入点，让切入点关联Service，让切入点（Service层的方法）关联通知（事务）-->
+    <aop:config>
+        <aop:pointcut id="myPointcut" expression="execution(* com.ssm.service..*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="myAdvice" pointcut-ref="myPointcut"></aop:advisor>
+    </aop:config>
+</beans>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:pi="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/context
+                          http://www.springframework.org/schema/context/spring-context.xsd
+                          http://www.springframework.org/schema/aop
+                          http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--创建Service对象，创建目标对象-->
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"/>
+
+    <!--配置spring的aop：【需求】：在访问目标对象的方法之前，添加一个日志功能-->
+    <!--1：配置切面（不具有灵魂，因为它只是创建对象）-->
+    <bean id="logger" class="com.itheima.utils.Logger"></bean>
+
+    <!--2：使用aop的名称空间，配置aop-->
+    <!--
+        aop:config：所有的aop配置，都必须放置到aop:config中
+        <aop:aspectj-autoproxy/> 开启自动代理
+        aop:aspect id="" ref=""：配置切面
+            * id：切面的名称，随意填写
+            * ref：注入声明切面的类（切面有灵魂）
+        aop:before：前置通知，表示在访问目标对象方法之前，先执行通知
+        pointcut="execution()"：表示定义切入点，在execution()方法上，定义切入点的表达式
+                关键字：execution(表达式)
+                          表达式：
+                参数一：访问修饰符（非必填）  public ,private
+                参数二：返回值（必填）        void,int,java.lang.String
+                参数三：包名.类名（非必填）   com.com.service.AccountService
+                参数四：方法名（参数）（必填）  saveAccount()   updateAccount(int)   deleteAccount()
+                参数五：异常（非必填）
+                          访问|修饰符  返回值  包名.包名.包名...类名.方法名(参数列表)
+       <aop:pointcut id="myAspect" expression="">：表示定义切入点
+          id="myAspect"：切入点的名称
+         expression=""：切入点的表达式
+    -->
+    <aop:config>
+        <aop:aspect id="myAspect" ref="logger">
+            <aop:pointcut id="myAspect" expression="execution(* com.itheima.service..*.*(..))"></aop:pointcut>
+            <!--<aop:before method="beforeWriteLog" pointcut-ref="myAspect"></aop:before>
+            <aop:after-returning method="afterReturningWriteLog" pointcut-ref="myAspect"></aop:after-returning>
+            <aop:after-throwing method="afterThrowingWriteLog" pointcut-ref="myAspect"></aop:after-throwing>
+            <aop:after method="afterWriteLog" pointcut-ref="myAspect"></aop:after>-->
+            <!--环绕通知-->
+            <aop:around method="aroundWriteLog" pointcut-ref="myAspect"></aop:around>
+        </aop:aspect>
+    </aop:config>
+</beans>

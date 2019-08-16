@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        <span v-if="flag">传智播客</span><br>
+        <span v-show="flag">黑马程序员</span><br>
+        <input type="button" value="切换" @click="toggle()">
+    </div>
+</body>
+</html>
+<script>
+    /**
+     *2.6v-if与v-show
+     v-if是根据表达式的值来决定是否渲染元素
+     v-show是根据表达式的值来切换元素的display css属性
+     demo12.html
+     【需求】：使用vue赋值flag变量（boolean类型），用来判断<span>元素中的内容是否显示。
+     */
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            flag:true
+        },
+        methods:{
+            toggle:function () {
+                this.flag = !this.flag;
+            }
+        }
+    })
+</script>

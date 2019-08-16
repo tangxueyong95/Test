@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"></transactionManager>
+            <!--数据源-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"></property>
+                <property name="url" value="jdbc:mysql:///day_1"></property>
+                <property name="username" value="root"></property>
+                <property name="password" value="root"></property>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--加载配置文件AccountDao.xml
+        只要放置到com.ssm.dao路基下的所有Dao接口都可以被mybatis管理
+    -->
+    <mappers>
+        <!--<mapper resource="com/ssm/dao/AccountDao.xml"></mapper>-->
+        <package name="com.ssm.dao"></package>
+    </mappers>
+</configuration>

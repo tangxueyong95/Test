@@ -1,0 +1,227 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>我的jquery表单校验页面</title>
+		<style type="text/css">
+			p{text-align: center;font-size:24px;}
+			table{margin: 0 auto;border: 0;}
+			table tr{height:40px;border:0;}
+			table tr td{padding:0 14px;border:1px solid #999}
+			.error{color:red}
+		</style>
+		
+        <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+		<!--引入表单校验插件-->
+		<script type="text/javascript" src="../js/jquery.validate.js"></script>
+</head>
+<script>
+	//身份证号的规则:1.长度必须是15位或者18位   2.如果是15位的身份证，那么必须是15个数字  3. 如果是18位的身份证可以是17个数字最后+X,或者是18个数字
+	//我们需要自定义校验规则
+	//1.定义一个校验身份证的位数的校验规则
+	$.validator.addMethod("cardNum",function (value,element,params) {
+		//value表示要校验的表单项的value值
+		//element表示要校验的表单项标签
+		//params表示校验时候传入的参数
+		//获取使用时候传入的参数
+		var len1 = params[0];
+		var len2 = params[1];
+		//要校验的表单项中的值的长度，要么为len1,要么为len2
+		var length = value.length;
+        if (length == len1 || length == len2) {
+            //校验成功
+			return true
+        }else {
+            return false
+		}
+
+    },"身份证号必须是15位或者18位")
+
+	//再定义一个校验规则，校验身份证号是15位时候的情况
+	$.validator.addMethod("rules15",function (value, element, params) {
+		//1.判断身份证的位数是否是15位
+        if (value.length == 15) {
+            //再校验它的规则
+			//这15位必须全部为数字
+			var reg = /^\d{15}$/
+			return reg.test(value)
+        }else {
+            //不是15位，我们就放行
+			return true
+		}
+    },"15位的身份证必须全部是数字")
+
+	$.validator.addMethod("rules18",function (value,element,params) {
+		//1.判断身份证号是否是18位
+        if (value.length == 18) {
+			var reg = /^\d{17}\d|X$/
+
+			return reg.test(value)
+        }else {
+            return true
+		}
+    },"18位的身份证号格式不正确")
+
+	//自定义一个校验身份证号的校验规则
+	$.validator.addMethod("idCard",function (value, element, params) {
+		//声明一个正则表达式,校验身份证
+		var reg = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+		return reg.test(value)
+    },"身份证号的格式不正确")
+
+	//页面加载完毕之后，开始校验表单
+	$(function () {
+		//1.获取表单对象，调用validate()方法
+		$("#empForm").validate({
+			"rules":{
+				//校验真实姓名
+                realname:{
+                    //1.不能为空
+                    required:true
+				},
+				username:{
+                    //1.不能为空
+                    required:true,
+					//长度应该在5-8位
+                    rangelength:[5,8]
+				},
+                psw:{
+                    //1.不能为空
+                    required:true,
+                    //长度应该在6-12位
+                    rangelength:[6,12]
+				},
+                psw2:{
+                    //内容和密码框的内容一样
+					//"#name属性值"
+                    equalTo:"#password"
+				},
+				age:{
+                    //年龄必须在26岁到50岁之间
+					range:[26,50],
+					//年龄必须是整数
+                    digits:true
+				},
+				cart:{
+                    /*cardNum:[15,18],
+					rules15:true,
+					rules18:true*/
+                    idCard:true
+				}
+			},
+			"messages":{
+                //校验真实姓名
+                realname:{
+                    //1.不能为空
+                    required:"真实姓名不能为空"
+                },
+                username:{
+                    //1.不能为空
+                    required:"用户名不能为空",
+                    //长度应该在5-8位
+                    rangelength:"用户名必须在{0}-{1}之间"
+                },
+                psw:{
+                    //1.不能为空
+                    required:"密码不能为空",
+                    //长度应该在6-12位
+                    rangelength:"密码的长度必须在{0}-{1}之间"
+                },
+                psw2:{
+                    //内容和密码框的内容一样
+                    //"#id值"
+                    equalTo:"两次输入的密码必须保持一致"
+                },
+                age:{
+                    //年龄必须在26岁到50岁之间
+                    range:"年龄必须在{0}-{1}岁之间",
+                    //年龄必须是整数
+                    digits:"年龄必须是整数"
+                }
+			}
+		})
+    })
+</script>
+<body>
+    <p>员工信息录入</p>
+	<form name="empForm" id="empForm" method="post" action="test.html">
+		<table border=1>
+			<tr>
+				<td>真实姓名(不能为空 ,没有其他要求)</td>
+				<td><input type="text" name="realname" />
+				</td>
+			</tr>
+			<tr>
+				<td>登录名(登录名不能为空,长度应该在5-8之间):</td>
+				<td><input type="text" id="username" name="username" /></td>
+			</tr>
+			 <tr> 
+		      <td>密码(不能为空,长度6-12字符或数字,不能包含中文字符):</td>
+		      <td><input type="password" id="password"  name="psw" /></td>
+		    </tr>
+		    <tr> 
+		      <td>重复密码密码(内容和密码框一样):</td>
+		      <td><input type="password" id="psw2" name="psw2" /></td>
+		    </tr>
+		    <tr>
+				<td>性别(必选其一)</td>
+				<td>
+				    <input  type="radio" id="gender_male" value="m" name="gender" checked="checked"/>&nbsp;男&nbsp;&nbsp;
+				    <input  type="radio" id="gender_female" value="f" name="gender"/>&nbsp;女
+				</td>
+			</tr>
+			<tr>
+				<td>年龄(必填26-50):</td>
+				<td><input type="text" id="age" name="age" /></td>
+			</tr>
+			
+		    <tr> 
+		      <td>你的学历:</td>
+		      <td> <select name="edu" id="edu">
+			          <option value="">－请选择你的学历－</option>
+			          <option value="a">专科</option>
+			          <option value="b">本科</option>
+			          <option value="c">研究生</option>
+			          <option value="e">硕士</option>
+			          <option value="d">博士</option>
+		          </select>
+			  </td>
+		    </tr>
+			
+			<tr> 
+              <td>出生日期(1982/09/21):</td>
+               <td><input type="text" id="birthday"  name="birthday" value="" /></td>
+            </tr>
+			
+		   <tr> 
+		      <td>兴趣爱好:</td>
+		      <td colspan="2"> 
+			      <input type="checkbox" name="checkbox1" id="qq1"/>&nbsp;乒乓球 &nbsp;
+		          <input type="checkbox" name="checkbox1" id="qq2" value="1" />&nbsp;羽毛球 &nbsp;
+		          <input type="checkbox" name="checkbox1" id="qq3" value="2" />&nbsp;上网 &nbsp;
+		          <input type="checkbox" name="checkbox1" id="qq4" value="3" />&nbsp;旅游 &nbsp;
+		          <input type="checkbox" name="checkbox1" id="qq5" value="4" />&nbsp;购物 &nbsp;
+			  </td>
+		    </tr>
+			 <tr> 
+			      <td align="left">电子邮箱:</td>
+			      <td><input type="text" id="email" name="email" /></td>
+			  </tr>
+			  <tr> 
+			      <td align="left">身份证(15-18):</td>
+			      <td><input type="text" id="cart" name="cart" /></td>
+			  </tr>
+			<tr>
+				<td></td>
+				<td><input type="submit"  name="firstname"  id="firstname" value="保存"></td>
+			</tr>
+		</table>
+
+</form>
+
+<script type="text/javascript">
+	
+	
+</script>
+
+</body>
+</html>

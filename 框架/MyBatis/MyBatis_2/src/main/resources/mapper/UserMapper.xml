@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.UserMapper">
+    <resultMap id="UserMap" type="listuser">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="birthday" property="birthday"/>
+        <result column="sex" property="sex"/>
+        <result column="address" property="address"/>
+        <collection property="users" ofType="user1">
+            <result column="professional" property="professional"/>
+        </collection>
+        <!--<result column="professional" property="user1.professional"/>-->
+    </resultMap>
+    <select id="selectUser1" parameterType="int" resultMap="UserMap">
+        SELECT * FROM user2,user1 WHERE user2.aid = user1.`aid` AND user2.`id`=#{id}
+    </select>
+    <select id="selectUser3" parameterType="int" resultType="user1">
+        select * from user1 where aid=#{aid}
+    </select>
+    <resultMap id="usermap1" type="listuser">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="birthday" property="birthday"/>
+        <result column="sex" property="sex"/>
+        <result column="address" property="address"/>
+        <collection property="users" ofType="user1" select="selectUser3" column="aid">
+            <result column="professional" property="professional"/>
+        </collection>
+    </resultMap>
+    <select id="selectUser4" parameterType="int" resultMap="usermap1">
+        select * from user2 where id=#{id}
+    </select>
+</mapper>

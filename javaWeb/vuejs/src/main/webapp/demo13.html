@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/vue-2.6.10.js"></script>
+<body>
+    <div id="app">
+        {{message}}<br>
+    </div>
+</body>
+</html>
+<script>
+    /**
+     * 生命周期  和  钩子函数的使用
+     */
+    var vue = new Vue({
+        el:"#app",
+        //template:"<h1><font color='red'>传智播客</font></h1>",
+        data:{
+            message:"你好，vue"
+        },
+        methods:{
+
+        },
+        // 钩子函数（当vue生命周期执行的过程中）
+        beforeCreate:function () {
+            showInfo("初始化数据之前...",this);
+        },
+        created:function () {
+            showInfo("初始化数据之后...",this);
+        },
+        beforeMount:function () {
+            showInfo("装载Dom数据之前...",this);
+        },
+        mounted:function () {
+            showInfo("装载Dom数据之后...",this);
+        },
+        beforeUpdate:function () {
+            showInfo("数据变化之前...",this);
+        },
+        updated:function () {
+            showInfo("数据变化之后...",this);
+        },
+        beforeDestroy:function () {
+            showInfo("vue实例销毁之前...",this);
+        },
+        destroyed:function () {
+            showInfo("vue实例销毁之后...",this);
+        }
+    })
+    // vue.$mount("#app"); // 当回调了vue.$mount("#app")，此时没有声明el:"#app",vue的生命周期仍然会继续执行
+    vue.message = "你好，传智播客";// 改变message的值
+    // vue.$destroy(); // 销毁vue实例
+    function showInfo(m, v) {
+        console.log(m);
+        console.log("虚拟的DOM结构（vue中声明的DOM结构
+        console.log("加载的数据message:"+v.message);）：");
+        console.log(v.$el);
+        console.log("真实的DOM结构（外部声明的DOM结构）：");
+        console.log(document.getElementById("app").innerHTML);
+        console.log("---------------------------")
+    }
+</script>
