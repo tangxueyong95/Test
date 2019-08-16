@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.health.dao.UserDao">
+
+    <resultMap id="userMap" type="user">
+        <id column="id" property="id"></id>
+        <collection property="roles" column="id" select="com.itheima.health.dao.RoleDao.findRolesByUserId"></collection>
+    </resultMap>
+    <!--使用登录名，查询用户信息-->
+    <select id="findUserByUsername" resultMap="userMap" parameterType="string">
+        select * from t_user where username = #{username}
+    </select>
+
+    <!--根据条件查询符合条件的用户对象-->
+    <select id="findCurrentPage" parameterType="string" resultType="user">
+        select * from t_user
+        <if test="value != null and value.length >0">
+            where username like "%"#{value}"%" or telephone like "%"#{value}"%" or remark like "%"#{value}"%"
+        </if>
+        order by id
+    </select>
+
+    <!--添加角色-->
+    <insert id="saveUser" parameterType="user">
+        <selectKey order="AFTER" keyProperty="id" resultType="int" keyColumn="id">
+            select last_insert_id()
+        </selectKey>
+        insert into t_user (birthday, gender, username, password, remark, station, telephone) values (#{birthday},#{gender},#{username},#{password},#{remark},#{station},#{telephone});
+    </insert>
+
+    <!--添加用户及角色的关联-->
+    <insert id="addUserReferenceRole">
+        insert into t_user_role (user_id, role_id) values (#{userId},#{roleId})
+    </insert>
+
+    <!--更具userId获取user对象-->
+    <select id="findUserById" parameterType="int" resultType="user">
+        select * from t_user where id = #{id}
+    </select>
+
+    <!--查询用户关联的角色id-->
+    <select id="findReferenceRoleIds" parameterType="int" resultType="int">
+        select role_id from t_user_role where user_id = #{id}
+    </select>
+
+    <!--更新用户基本数据:-->
+    <update id="updateUserDetailMessage" parameterType="user">
+        update t_user set  birthday = #{birthday},gender = #{gender},username = #{username},remark = #{remark},station = #{station},telephone = #{telephone},password = #{password}  where id = #{id}
+    </update>
+
+    <!--删除用户所关联的角色id-->
+    <delete id="deleteUserReferenceRoleIds" parameterType="int">
+        delete from t_user_role where user_id = #{userId}
+    </delete>
+
+    <!--根据用户id获取用户密码-->
+    <select id="findUserPasswordByUserId" resultType="string" parameterType="int">
+        select password from t_user where id = #{id}
+    </select>
+
+    <!--删除用户基本信息:更具用户id-->
+    <delete id="deleteUserDetailMessageByUserId" parameterType="int">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <!--更具用户名修改用户密码:-->
+    <update id="updateUserPasswordByUsername">
+        update t_user set password = #{newPassword} where username = #{username}
+    </update>
+</mapper>
