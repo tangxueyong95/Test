@@ -1,0 +1,102 @@
+知识点:
+一、执行增删改查的SQL语句(适合使用注解)
+    Insert注解
+	Delete注解
+	Update注解
+	Select注解
+		以上四个注解都只需要设置sql语句就行了
+
+
+二、自定义映射规则
+	1. 配置文件的方式
+	   <resultMap id="唯一表示" type属性="映射的JavaBean的类型">
+		   <id column="结果集中的主键字段" property="JavaBean中对应的属性名"/>
+		   <result column="结果集中的非主键字段" property="JavaBean中对应的属性名"/>
+		   <!--一对一的映射规则-->
+		   <association property="属性名" select="调用外部查询" column="向外部查询传递参数" JavaType="一对一映射的那个JavaBean的类型(集合类型)">
+			 <id column="结果集中的主键字段" property="JavaBean中对应的属性名"/>
+		     <result column="结果集中的非主键字段" property="JavaBean中对应的属性名"/>
+		   </association>
+	   
+		   <!--一对多的映射规则-->
+		   <collection property="属性名" select="调用外部查询" column="向外部查询传递参数" ofType="一对一映射的那个JavaBean的类型(对象类型)">
+			 <id column="结果集中的主键字段" property="JavaBean中对应的属性名"/>
+		     <result column="结果集中的非主键字段" property="JavaBean中对应的属性名"/>
+		   </collection>
+	   </resultMap>
+	
+	
+	
+	
+	2. 注解的方式
+	   @Results(id="唯一标示",value={
+	     @Result(column="结果集的字段名",property="JavaBean的属性名",id=true),
+		 @Result(column="结果集的字段名",property="JavaBean的属性名"),
+		 @Result(column="结果集的字段名",property="JavaBean的属性名"),
+		 <!--进行一对一的映射-->
+		 @Result(property="要映射的JavaBean的属性名",one=@One(select="执行该查询的方法的相对路径"),column="调用外部查询时候要传入的参数"),
+		 
+		 <!--进行一对多的映射-->
+		 @Result(property="要映射的JavaBean的属性名",many=@Many(select="执行该查询的方法的相对路径"),column="调用外部查询时候要传入的参数")
+	   })
+	   
+    原则:多表连接查询时候，如果是使用两步查询法调用外部查询的卷，就可以使用注解的方式
+	如果是直接使用多表连接查询语句，然后再进行映射的话，就不好使用注解
+
+
+三、动态SQL(使用配置文件的方式)
+    if标签:
+		test属性用于指定判断条件
+	where标签:结合if一起使用
+	foreach标签:
+		collection属性:指定要遍历的对象，如果是集合就写list
+		item属性:遍历出来的数据
+		open属性:拼接在遍历出来的第一条数据之前
+		close属性:拼接在遍历出来的最后一条数据之后
+		separator属性:遍历出来的每个数据之间的分隔符
+
+
+四、多表关联查询(建议使用配置文件)
+    第一种方式:直接编写多表连接查询语句，进行一次查询(只适合配置文件方式)
+	第二种方式:使用两步查询，用select调用外部查询(配置文件方式或者注解方式都行)
+
+
+五、延迟加载
+    场景是在"两步查询"中:如果只需要进行第一步查询的话，那么第二步查询就不会执行
+	只有当需要第二步查询的数据的时候，才会执行第二步查询
+	
+	怎么配置:在主配置文件中添加settings标签，在settings标签中配置
+	也可以在注解中的@One或者@Many注解里面指定"fetchType"属性为FechType.LAZY
+
+六、缓存
+    1. 一级缓存，默认就有的，不需要进行配置，它是sqlSession级别的缓存，使用同一个sqlSession对象的时候，就会有缓存
+	2. 怎么清空以及缓存?1.sqlSession.close()  2.sqlSession.commit()  3.sqlSession.clearCache()  4.进行增删改
+	
+	3. 二级缓存，需要配置，它是namespace级别的缓存，同一个namespace可以使用二级缓存
+	4. 怎么配置二级缓存:
+		4.1 主配置文件的settings标签中添加内容
+		4.2 映射配置文件中添加cache标签，或者是对应的接口上添加@CacheNamespace(blocking=true)
+		4.3 对应的JavaBean类要实现Serializable接口
+		
+	5. 什么时候会清空二级缓存?进行增删改
+	
+	
+	
+七、主配置文件
+   1. settings标签:配置懒加载、配置二级缓存
+   2. properties标签:引入外部的properties配置文件
+   3. environments标签:通过default属性指定当前使用的环境
+      子标签environment:配置环境
+		id属性:该环境的唯一表示，供environments标签引用
+		<transactionManager type="JDBC"></transactionManager>
+		<dataSource type="POOLED">
+			<property name="username" value="root"/>
+			<property name="password" value="123"/>
+			<property name="driver" value="com.mysql.jdbc.Driver"/>
+			<property name="url" value="jdbc:mysql:///mybatis"/>
+		</dataSource>
+	4. typeAliases里面配置别名
+		  package标签进行包扫描
+		  
+    5. mappers标签，加载映射配置文件/注解
+	      package标签进行包扫描，扫描所有的映射配置文件以及有注解的接口
