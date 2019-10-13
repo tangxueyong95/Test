@@ -15,12 +15,14 @@ public class 求长度为n的数组中第一个重复的数 {
                     duplication[0] = numbers[i];
                     return true;
                 }
+                //将数组中的数放置在数组中以该值为下标的位置
                 swap(numbers, i, numbers[i]);
             }
         }
         return false;
     }
 
+    //位置交换
     private static void swap(int[] nums, int i, int j) {
         int t = nums[i];
         nums[i] = nums[j];

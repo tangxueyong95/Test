@@ -1,11 +1,11 @@
-package com.day_25;
+package com.day_25.排序算法.交换排序;
 
 import java.util.Arrays;
 
 public class 冒泡排序优化 {
     public static void main(String[] args) {
         int[] array = {
-                3, 6, 2, 7, 9, 5, 0, 1, 4, 8
+                4, 2, 1, 5, 3
         };
 // 程序有效运行的次数
         int runCount = 0;
