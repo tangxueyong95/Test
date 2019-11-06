@@ -13,10 +13,10 @@
       ">
 
     <!--包扫描-->
-    <context:component-scan base-package="com.itheima.service" />
+    <context:component-scan base-package="com.java.service" />
 
     <!--扫描Dao包，自动创建实例，扫描所有继承ElasticsearchRepository接口的接口-->
-    <elasticsearch:repositories base-package="com.itheima.dao.es"/>
+    <elasticsearch:repositories base-package="com.java.dao.es"/>
 
     <!--配置elasticSearch的连接对象Client-->
     <elasticsearch:transport-client id="client" cluster-nodes="localhost:9300" cluster-name="elasticsearch"/>

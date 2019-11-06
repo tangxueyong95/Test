@@ -1,4 +1,0 @@
-name=com.mysql.jdbc.Driver
-url=jdbc:mysql://localhost:3306/day
-user=root
-password=root

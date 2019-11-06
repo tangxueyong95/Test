@@ -1,13 +1,5 @@
 package com.ssm.domain;
 
-/**
- * @ClassName Account
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/19 8:52
- * @Version V1.0
- */
 public class Account {
 
     private Integer id;

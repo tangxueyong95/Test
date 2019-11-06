@@ -3,8 +3,8 @@ package domain;
 import java.io.Serializable;
 
 /**
- * 包名:com.itheima.domain
- * 作者:Leevi
+ * 包名:domain
+ * 作者:tangxueyong
  * 日期2019-06-04  08:54
  */
 public class User implements Serializable {

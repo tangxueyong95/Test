@@ -33,7 +33,7 @@ spring:
 
 #      default-filters:
 #        #使用AddResponseHeader过滤器，添加一个同文件信息
-#        - AddResponseHeader=X-Response-Default-MyName,itheima
+#        - AddResponseHeader=X-Response-Default-MyName,java
 
 # Eureka服务中心配置
 eureka:

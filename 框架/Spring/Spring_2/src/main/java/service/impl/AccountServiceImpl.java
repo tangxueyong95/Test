@@ -4,7 +4,6 @@ package service.impl;
 import dao.AccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import service.AccountService;
@@ -13,14 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Date;
 
-/**
- * @ClassName AccountServiceImpl
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/11 8:49
- * @Version V1.0
- */
 @Service(value = "accountService")
 @Scope(value = "singleton") // prototype：多例；singleton：单例
 public class AccountServiceImpl implements AccountService {

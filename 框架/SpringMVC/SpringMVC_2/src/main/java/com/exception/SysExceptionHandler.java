@@ -7,14 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @ClassName SysExceptionHandler
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/17 12:00
- * @Version V1.0
- */
+
 // 2：编写异常处理器（springmvc，必须实现异常处理接口）
 public class SysExceptionHandler implements HandlerExceptionResolver {
 

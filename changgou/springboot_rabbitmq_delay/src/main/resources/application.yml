@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: springboot-demo
-  rabbitmq:
-    host: 192.168.211.132
-    port: 5672
-    password: guest
-    username: guest

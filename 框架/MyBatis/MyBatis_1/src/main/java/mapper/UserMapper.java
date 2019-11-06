@@ -4,8 +4,8 @@ import domain.User;
 import java.util.List;
 
 /**
- * 包名:com.itheima.mapper
- * 作者:Leevi
+ * 包名:mapper
+ * 作者:tangxueyong
  * 日期2019-06-04  08:54
  */
 public interface UserMapper {

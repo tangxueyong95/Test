@@ -31,7 +31,7 @@ eureka:
     service-url:
       # 注册Eureka Server集群
       defaultZone: http://127.0.0.1:7001/eureka
-# com.itheima 包下的日志级别都为Debug
+# com.java 包下的日志级别都为Debug
 logging:
   level:
     com: debug

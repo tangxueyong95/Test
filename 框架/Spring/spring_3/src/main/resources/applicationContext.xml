@@ -11,11 +11,11 @@
                           http://www.springframework.org/schema/aop
                           http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!--创建Service对象，创建目标对象-->
-    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"/>
+    <bean id="accountService" class="AccountServiceImpl"/>
 
     <!--配置spring的aop：【需求】：在访问目标对象的方法之前，添加一个日志功能-->
     <!--1：配置切面（不具有灵魂，因为它只是创建对象）-->
-    <bean id="logger" class="com.itheima.utils.Logger"></bean>
+    <bean id="logger" class="Logger"></bean>
 
     <!--2：使用aop的名称空间，配置aop-->
     <!--
@@ -30,7 +30,7 @@
                           表达式：
                 参数一：访问修饰符（非必填）  public ,private
                 参数二：返回值（必填）        void,int,java.lang.String
-                参数三：包名.类名（非必填）   com.com.service.AccountService
+                参数三：包名.类名（非必填）   com.com.AccountService
                 参数四：方法名（参数）（必填）  saveAccount()   updateAccount(int)   deleteAccount()
                 参数五：异常（非必填）
                           访问|修饰符  返回值  包名.包名.包名...类名.方法名(参数列表)
@@ -40,7 +40,7 @@
     -->
     <aop:config>
         <aop:aspect id="myAspect" ref="logger">
-            <aop:pointcut id="myAspect" expression="execution(* com.itheima.service..*.*(..))"></aop:pointcut>
+            <aop:pointcut id="myAspect" expression="execution(* service..*.*(..))"></aop:pointcut>
             <!--<aop:before method="beforeWriteLog" pointcut-ref="myAspect"></aop:before>
             <aop:after-returning method="afterReturningWriteLog" pointcut-ref="myAspect"></aop:after-returning>
             <aop:after-throwing method="afterThrowingWriteLog" pointcut-ref="myAspect"></aop:after-throwing>
