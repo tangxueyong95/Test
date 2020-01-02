@@ -1,12 +1,12 @@
 package mapper;
 
 import domain.ListUser;
+import domain.Student;
 import domain.User;
 import domain.User1;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.mapping.FetchType;
 
-import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
     @Insert("insert into user2 values (#{id},#{username},#{birthday},#{sex},#{address},null)")
@@ -38,4 +38,10 @@ public interface UserMapper {
 
     /*@Select("select * from user1 where aid=#{aid}")*/
     User1 selectUser3(int aid);
+
+    int addStudent(Map map);
+
+    int addStudent(Student map);
+
+    int updateStuent(Map map);
 }

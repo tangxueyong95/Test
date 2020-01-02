@@ -8,22 +8,40 @@
 <!--不能用简写导入，否则页面不会加载-->
 <!--<script src="js/vue-2.6.10.js"/>-->
 <body>
-    <div id="app">
-
+<div style="background-color: #f4f5f6;height: 250px;">
+    <div style="width: 500px;height: 200px;background-color: white;position: relative;top: 25px;left: 30px;">
+        <div style="width: 300px;height: 200px;border-right: 1px dashed #dedede;" align="center">
+            <img src="/images/dd.png" style="height: 80px;width: 80px;margin-top: 40px;">
+            <p style="font-size: 15px;">主机设备接入总数（台）</p>
+            <b style="font-size: 18px;" id="deviceNum"></b>
+        </div>
+        <div style="float: right;margin-top: -120px;margin-right: 75px;" align="center">
+            <div align="center">
+                <p style="font-size: 15px;">今日新增</p>
+                <b style="font-size: 18px;" id="addDeviceNum"></b>
+            </div>
+        </div>
     </div>
+    <div style="width: 500px;height: 200px;background-color: white;position: relative;top: -175px;left: 560px;">
+        <div style="width: 300px;height: 200px;border-right: 1px dashed #dedede;" align="center">
+            <img src="/images/od.png" style="height: 80px;width: 80px;margin-top: 40px;">
+            <p style="font-size: 15px;">在线主机设备</p>
+            <b style="font-size: 18px;" id="onlineDevice"></b>
+        </div>
+        <div style="float: right;margin-top: -120px;margin-right: 55px;" align="center">
+            <div align="center">
+                <p style="font-size: 15px;">离线主机设备</p>
+                <b style="font-size: 18px;" id="offlineDevice"></b>
+            </div>
+        </div>
+        <!--<div style="width: 300px;height: 200px;border-right: 1px dashed #dedede;">-->
+            <!--<div style="float: left;margin-top: 80px;margin-left: 80px;">-->
+                <!--<p data-v-de047802="" style="font-size: 15px;">在线主机设备</p>-->
+                <!--<b data-v-de047802="" style="margin-left: 10px;font-size: 18px;" id="onlineDevice"></b>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    <h2 style="text-align:left">接入设备数统计</h2>
+</div>
 </body>
 </html>
-<script>
-    /**
-     *
-     */
-    var vue = new Vue({
-        el:"#app",
-        data:{
-
-        },
-        methods:{
-
-        }
-    })
-</script>

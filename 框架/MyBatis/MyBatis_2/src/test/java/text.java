@@ -1,6 +1,6 @@
 import domain.ListUser;
+import domain.Student;
 import domain.User;
-import domain.User1;
 import mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -12,7 +12,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class text {
     private SqlSession sqlSession;
@@ -78,5 +79,31 @@ public class text {
     public void textselect3(){
         ListUser user = mapper.selectUser4(67);
         System.out.println(user);
+    }
+    @Test
+    public void test(){
+//        Map map=new HashMap();
+//        map.put("name","tang");
+//        map.put("age","18");
+//        map.put("sex","男");
+        Student map= new Student();
+        map.setName("tang");
+        map.setAge("18");
+        map.setSex("男");
+        int i = mapper.addStudent(map);
+        int id = map.getId();
+        System.out.println(i);
+        System.out.println(id);
+    }
+
+    @Test
+    public void updateTest(){
+        Map map=new HashMap();
+        map.put("name","唐");
+        map.put("id","1");
+        int i = mapper.updateStuent(map);
+        String sex = (String)map.get("sex");
+        System.out.println(i);
+        System.out.println(sex);
     }
 }
