@@ -82,7 +82,7 @@
             }
 
         },
-        yAxis: {triggerEvent:true},
+        yAxis: {triggerEvent:false},
         series: {
             name: '销量',
             type: 'bar',
@@ -108,37 +108,38 @@
 
     myChart.on('click', function (params) {
         // 当componentType == "xAxis"或者 ==“yAxisx”时，取被点击时坐标轴的值params.value
-        alert("单击了"+params.componentType+"x轴标签"+params.value);
-        if(params.componentType == "xAxis"){
-            alert("单击了"+params.value+"x轴标签");
-        }else if (params.componentType == "yAxis") {
-            alert("单击了"+params.value+"y轴标签");
+        alert("单击了"+params.componentType+"轴标签"+params.name);
+        if(params.componentType == "xAxis") {
+            alert("单击了" + params.value + "x轴标签");
         }
+        // }else if (params.componentType == "yAxis") {
+        //     alert("单击了"+params.value+"y轴标签");
+        // }
         else{
             alert("单击了"+params.name+"柱状图"+params.value);
         }
 
         // invalid start
             // 获取data长度
-        　　alert(option.series[0].data.length);
+        // 　　alert(option.series[0].data.length);
              // 获取地N个data的值
-        　　alert(option.series[0].data[3]);
+        // 　　alert(option.series[0].data[3]);
             // 获取series中param.dataIndex事件对应的值
-        alert(params.dataIndex);
-        　　alert(option.series[params.seriesIndex].data[params.dataIndex]);
+        // alert(params.dataIndex);
+        // 　　alert(option.series[params.seriesIndex].data[params.dataIndex]);
         // invalid end
 
-        alert(param.value);
+        // alert(param.value);
            // 获取xAxis当前点击事件索引对应的值，可以用作传参
-        alert("test "+option.xAxis.data[params.dataIndex]);
+        // alert("test "+option.xAxis.data[params.dataIndex]);
         // param.dataIndex 获取当前点击索引，
-        　　alert(param.dataIndex);
+        // 　　alert(param.dataIndex);
         //  当前点击事件位于series中的索引
-          alert(param.seriesIndex);
+        //   alert(param.seriesIndex);
         //param具体包含的参数见 https://blog.csdn.net/allenjay11/article/details/76033232
         // updatePage(option.xAxis.data[params.dataIndex],params.value);
         //
-        // refresh();
+        // refresh(params.name);
     });
 </script>
 
@@ -150,7 +151,8 @@
         barValue.html(value);
     };
 
-    function refresh(){
+    function refresh(name){
+        alert(name);
         // 刷新页面
         // location.reload();
         //window.location.reload();

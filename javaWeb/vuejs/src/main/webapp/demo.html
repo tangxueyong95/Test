@@ -35,13 +35,37 @@
             </div>
         </div>
         <!--<div style="width: 300px;height: 200px;border-right: 1px dashed #dedede;">-->
-            <!--<div style="float: left;margin-top: 80px;margin-left: 80px;">-->
-                <!--<p data-v-de047802="" style="font-size: 15px;">在线主机设备</p>-->
-                <!--<b data-v-de047802="" style="margin-left: 10px;font-size: 18px;" id="onlineDevice"></b>-->
-            <!--</div>-->
+        <!--<div style="float: left;margin-top: 80px;margin-left: 80px;">-->
+        <!--<p data-v-de047802="" style="font-size: 15px;">在线主机设备</p>-->
+        <!--<b data-v-de047802="" style="margin-left: 10px;font-size: 18px;" id="onlineDevice"></b>-->
+        <!--</div>-->
         <!--</div>-->
     </div>
     <h2 style="text-align:left">接入设备数统计</h2>
+    <input type="button" value="登录" onclick="severCheck();" style="cursor:pointer" class="inp1 btn"/>
 </div>
+<script src="js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    //服务器校验
+    function severCheck() {
+            var code = "fd2DE08C4B1516C2admin,\3,jxzr123456FD2DE08C4B1516C2,\3,";
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8099/login_login',
+                data: {KEYDATA: code,tm: new Date().getTime()},
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    if ("success" == data.result) {
+                        window.location.href = "http://localhost:8099/main/index";
+                    } else {
+                        $(".login .qh").show();
+                        $(".login .qh i").text(data.result);
+                        $(".login .txt1").focus();
+                    }
+                }
+            });
+    }
+</script>
 </body>
 </html>
