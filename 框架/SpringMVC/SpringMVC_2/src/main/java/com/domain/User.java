@@ -1,13 +1,6 @@
 package com.domain;
 
-/**
- * @ClassName User
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/16 10:13
- * @Version V1.0
- */
+
 public class User {
     private String username;
     private Integer age;

@@ -7,6 +7,9 @@
     <groupId>com.java</groupId>
     <artifactId>MyBatis</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <modules>
+        <module>MyBatis_1</module>
+        <module>MyBatis_2</module>
+    </modules>
 
 </project>

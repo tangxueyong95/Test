@@ -24,7 +24,7 @@
     alias就表示配置的别名
     -->
     <typeAliases>
-        <!--<typeAlias type="com.itheima.domain.User" alias="user"></typeAlias>-->
+        <!--<typeAlias type="User" alias="user"></typeAlias>-->
         <!--
         给domain包中的所有类统一配置别名,通过包扫描
         别名是啥?别名就是你的类名，不区分大小写

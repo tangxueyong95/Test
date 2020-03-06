@@ -7,14 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @ClassName SysInterceptor
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/17 12:19
- * @Version V1.0
- */
 public class SysInterceptor2 implements HandlerInterceptor {
 
     /**

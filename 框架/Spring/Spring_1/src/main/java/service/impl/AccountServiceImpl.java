@@ -6,14 +6,6 @@ import service.AccountService;
 
 import java.util.Date;
 
-/**
- * @ClassName AccountServiceImpl
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/9 9:15
- * @Version V1.0
- */
 public class AccountServiceImpl implements AccountService {
 
     private String name;

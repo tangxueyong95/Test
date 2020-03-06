@@ -15,8 +15,8 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * 包名:com.itheima.mybatis
- * 作者:Leevi
+ * 包名:mybatis
+ * 作者:tangxueyong
  * 日期2019-06-04  09:14
  */
 public class TestMybatis {

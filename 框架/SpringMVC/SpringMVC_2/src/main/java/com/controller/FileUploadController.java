@@ -16,14 +16,7 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @ClassName HelloController
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/16 9:16
- * @Version V1.0
- */
+
 @Controller
 @RequestMapping(value = "/fileUpload")
 public class FileUploadController {

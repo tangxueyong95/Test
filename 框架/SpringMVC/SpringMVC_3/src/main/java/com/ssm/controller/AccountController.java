@@ -10,14 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-/**
- * @ClassName AccountController
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/19 8:58
- * @Version V1.0
- */
 @Controller
 @RequestMapping(value = "/account")
 public class AccountController {

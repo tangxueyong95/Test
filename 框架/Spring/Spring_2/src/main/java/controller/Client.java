@@ -3,14 +3,6 @@ package controller;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import service.AccountService;
 
-/**
- * @ClassName Client
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/11 8:49
- * @Version V1.0
- */
 public class Client {
 
     // 使用工厂加载spring容器

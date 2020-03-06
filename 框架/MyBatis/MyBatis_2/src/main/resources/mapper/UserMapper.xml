@@ -33,4 +33,12 @@
     <select id="selectUser4" parameterType="int" resultMap="usermap1">
         select * from user2 where id=#{id}
     </select>
+
+    <insert id="addStudent" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Student(NAME,age,sex) VALUES (#{name},#{age},#{sex})
+    </insert>
+
+    <update id="updateStuent" parameterType="java.util.Map">
+        UPDATE student SET NAME=#{name} WHERE id=#{id}
+    </update>
 </mapper>

@@ -14,14 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @ClassName HelloController
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/16 9:16
- * @Version V1.0
- */
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {

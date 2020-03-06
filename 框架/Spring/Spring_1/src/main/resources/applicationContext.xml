@@ -14,13 +14,13 @@
             value：值的注入（字符串，基本数据类型）
             ref：表示对象的注入，需要由容器去创建对象，将创建对象id放置进去，表示注入一个对象
     -->
-    <!--<bean id="accountService" class="service.impl.AccountServiceImpl">
+    <!--<bean id="accountService" class="AccountServiceImpl">
         <constructor-arg name="name" value="冯小刚"></constructor-arg>
         <constructor-arg name="age" value="50"></constructor-arg>
         <constructor-arg name="birthday" ref="date"></constructor-arg>
     </bean>-->
     <bean id="date" class="java.util.Date"/>
-    <bean id="accountService" class="service.impl.AccountServiceImpl">
+    <bean id="accountService" class="AccountServiceImpl">
         <constructor-arg index="0" value="冯小刚"/>
         <constructor-arg type="java.lang.Integer" value="50"/>
         <constructor-arg name="birthday" ref="date"/>

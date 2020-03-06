@@ -28,7 +28,7 @@
     <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">
             <set>
-                <bean class="com.itheima.convertor.StringToDateConvertor"></bean>
+                <bean class="com.convertor.StringToDateConvertor"></bean>
             </set>
         </property>
     </bean>

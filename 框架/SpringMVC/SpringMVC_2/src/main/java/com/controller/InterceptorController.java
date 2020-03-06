@@ -3,14 +3,6 @@ package com.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * @ClassName HelloController
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/16 9:16
- * @Version V1.0
- */
 @Controller
 @RequestMapping(value = "/interceptor")
 public class InterceptorController {

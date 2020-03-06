@@ -45,10 +45,10 @@
     </bean>
     <!--3：创建MapperScannerConfiguration，扫描所有的Dao接口，让Dao接口可以被Spring管理-->
     <bean id="accountDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.ssm.dao.AccountDao"></property>
+        <property name="mapperInterface" value="com.ssm.AccountDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
-    <bean class="com.ssm.service.impl.AccountServiceImpl" id="accountService">
+    <bean class="com.ssm.AccountServiceImpl" id="accountService">
         <property name="accountDao" ref="accountDao"/>
     </bean>
     <!--spring的声明式事务处理-->

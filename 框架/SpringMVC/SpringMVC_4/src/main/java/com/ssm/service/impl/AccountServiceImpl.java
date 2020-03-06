@@ -4,19 +4,10 @@ package com.ssm.service.impl;
 import com.ssm.dao.AccountDao;
 import com.ssm.domain.Account;
 import com.ssm.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @ClassName AccountServiceImpl
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/19 8:55
- * @Version V1.0
- */
 @Service
 public class AccountServiceImpl implements AccountService {
 

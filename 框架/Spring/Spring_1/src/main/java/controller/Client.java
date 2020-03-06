@@ -6,14 +6,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import service.AccountService;
 
-/**
- * @ClassName Client
- * @Description TODO
- * @Author ly
- * @Company 深圳黑马程序员
- * @Date 2019/6/9 9:16
- * @Version V1.0
- */
 // 模拟Controller
 public class Client {
 
