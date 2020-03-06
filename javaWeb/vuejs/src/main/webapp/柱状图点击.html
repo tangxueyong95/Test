@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ECharts</title>
+    <!-- <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>  -->
+    <script src="https://cdn.bootcss.com/echarts/4.0.2/echarts.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+您选择了X轴的标签[<span id="xAxisTag"></span>],他的值为[<span id="barValue"></span>]
+<input type="submit" name="" value="刷新" onclick="refresh()">
+<div id="main" style="width: 600px;height:400px;"></div>
+
+</body>
+<script type="text/javascript">
+    function getSeriesData(){
+
+        //根据js方法本身的加载顺序，此方法需要定义在myChart前面
+        //此处可以通过后台生成数据，这样后台就无需返回整个option，只需要返回动态的数据部分即可
+        // $.ajax({
+        //     type: 'GET',
+        //     url: "getSeriesData",
+        //     cache: false,
+        //     async : false,
+        //     dataType: 'json',
+        //     success: function (result) {
+        //         seriesdata = result;
+        //     },
+        //     error: function (result, XMLHttpRequest, textStatus, errorThrown) {
+        //         // 状态码
+        //         // console.log(XMLHttpRequest.status);
+        //         // console.log(XMLHttpRequest.toLocaleString());
+        //         // 状态
+        //         // console.log(XMLHttpRequest.readyState);
+        //         // 错误信息
+        //         // console.log(textStatus);
+        //     }
+        // });
+
+        var n1 = Math.floor(Math.random()*50+1);
+        var n2 = Math.floor(Math.random()*50+1);
+        var n3 = Math.floor(Math.random()*50+1);
+        var n4 = Math.floor(Math.random()*50+1);
+        var n5 = Math.floor(Math.random()*50+1);
+        var n6 = Math.floor(Math.random()*50+1);
+        seriesdata = [n1, n2, n3, n4, n5, n6];
+
+        return seriesdata;
+    }
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // var n1 = Math.floor(Math.random()*50+1);
+    // var n2 = Math.floor(Math.random()*50+1);
+    // var n3 = Math.floor(Math.random()*50+1);
+    // var n4 = Math.floor(Math.random()*50+1);
+    // var n5 = Math.floor(Math.random()*50+1);
+    // var n6 = Math.floor(Math.random()*50+1);
+    //var seriesdata = [n1, n2, n3, n4, n5, n6];
+
+    var seriesdata ;
+    seriesdata=getSeriesData();
+    console.log("seriesdata getSeriesData is "+seriesdata);
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"],
+            triggerEvent:true,
+            axisTick: {
+                alignWithLabel: true //坐标值是否在刻度中间
+            }
+
+        },
+        yAxis: {triggerEvent:false},
+        series: {
+            name: '销量',
+            type: 'bar',
+            //data: [n1, n2, n3, n4, n5, n6],
+            data : seriesdata,
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        var colorList = ['#2eddc1','#FCCE10','#E87C25','#277bbb','#E87fff','#277aaa'];
+                        //若返回的list长度不足，不足部分自动显示为最后一个颜色
+                        return colorList[params.dataIndex]
+                    },
+                    label: {
+                        show: true,
+                        position: 'top'
+                    }
+                }
+            }
+        }
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    myChart.on('click', function (params) {
+        // 当componentType == "xAxis"或者 ==“yAxisx”时，取被点击时坐标轴的值params.value
+        alert("单击了"+params.componentType+"轴标签"+params.name);
+        if(params.componentType == "xAxis") {
+            alert("单击了" + params.value + "x轴标签");
+        }
+        // }else if (params.componentType == "yAxis") {
+        //     alert("单击了"+params.value+"y轴标签");
+        // }
+        else{
+            alert("单击了"+params.name+"柱状图"+params.value);
+        }
+
+        // invalid start
+            // 获取data长度
+        // 　　alert(option.series[0].data.length);
+             // 获取地N个data的值
+        // 　　alert(option.series[0].data[3]);
+            // 获取series中param.dataIndex事件对应的值
+        // alert(params.dataIndex);
+        // 　　alert(option.series[params.seriesIndex].data[params.dataIndex]);
+        // invalid end
+
+        // alert(param.value);
+           // 获取xAxis当前点击事件索引对应的值，可以用作传参
+        // alert("test "+option.xAxis.data[params.dataIndex]);
+        // param.dataIndex 获取当前点击索引，
+        // 　　alert(param.dataIndex);
+        //  当前点击事件位于series中的索引
+        //   alert(param.seriesIndex);
+        //param具体包含的参数见 https://blog.csdn.net/allenjay11/article/details/76033232
+        // updatePage(option.xAxis.data[params.dataIndex],params.value);
+        //
+        // refresh(params.name);
+    });
+</script>
+
+<script type="text/javascript">
+    function updatePage(tag, value){
+        var xAxisTag = $("#xAxisTag");
+        xAxisTag.html(tag);
+        var barValue = $("#barValue");
+        barValue.html(value);
+    };
+
+    function refresh(name){
+        alert(name);
+        // 刷新页面
+        // location.reload();
+        //window.location.reload();
+
+        //局部刷新main内容
+        //此处没有用常用的刷新div等方法，而是直接改变了option的值，然后重新赋值给myChart
+        console.log("refresh");
+        option.title.text='入门';
+        // option.series.data[0] = Math.floor(Math.random()*50+1);
+        // option.series.data[1] = Math.floor(Math.random()*50+1);
+        // option.series.data[2] = Math.floor(Math.random()*50+1);
+        // option.series.data[3] = Math.floor(Math.random()*50+1);
+        // option.series.data[4] = Math.floor(Math.random()*50+1);
+        // option.series.data[5] = Math.floor(Math.random()*50+1);
+
+        //console.log(option.series.data[0]);
+        //var v1 = Math.floor(Math.random()*50+1);
+        //option.series.data[0] = v1;
+
+        //简化方法，调用getSeriesData更新数据。
+        option.series.data = getSeriesData();
+
+        myChart.setOption(option);
+    };
+
+</script>
+</html>
