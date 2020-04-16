@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService{
         //先判断Redis中是否有数据
         List<User> users = (List<User>) redisTemplate.boundValueOps("UserList").get();
 
+        List<User> userList = (List<User>) redisTemplate.opsForValue().get("UserList");
         //如果有，则直接返回数据
         if(users!=null){
             System.out.println("有数据==========");

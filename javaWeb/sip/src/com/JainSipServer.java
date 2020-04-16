@@ -31,7 +31,7 @@ public class JainSipServer{
     SipProvider sipProvider = null;
     private Dialog dialog;
 
-    static String ip = "192.168.10.21";
+    static String ip = "192.168.10.220";
     static int port = 5070;
     static String uname="tang";
 
@@ -40,7 +40,7 @@ public class JainSipServer{
         test.init();
         String message1 = "<?xml version=\"1.0\"?><Notify><CmdType>Alarm</CmdType><SN>17430</SN><DeviceID>34020000001110000001</DeviceID><StartAlarmPriority>1</StartAlarmPriority><EndAlarmPriority>4</EndAlarmPriority><AlarmMethod>0</AlarmMethod><StartTime>2010-11-11T00:00:00</StartTime><EndTime>2010-12-11T00:00:00</EndTime></Notify>";
         String message = "<?xml version=\"1.0\"?><Query><CmdType>Catalog</CmdType><SN>17430</SN><DeviceID>>64010000001110000001</DeviceID><StartTime>2010-11-11T00:00:00</StartTime><EndTime>2010-12-11T00:00:00</EndTime></Query>";
-        test.sendSubscribe("Tom","192.168.10.21:5060",message);
+//        test.sendSubscribe("Tom","192.168.10.21:5060",message);
     }
     public void init() {
         Properties prop = new Properties();

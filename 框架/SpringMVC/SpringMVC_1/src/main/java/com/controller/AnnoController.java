@@ -60,8 +60,8 @@ public class AnnoController {
      * value：用于指定url中占位符名称。
      * required：是否必须提供占位符。
      */
-    @RequestMapping(value = "/testPathVariable/{id}/{name}")
-    public String testPathVariable(@PathVariable(value = "id") Integer id, @PathVariable(value = "name") String name) {
+    @RequestMapping(value = {"/testPathVariable/{id}/{name}", "/testPathVariable/{id}"})
+    public String testPathVariable(@PathVariable(value = "id") Integer id, @PathVariable(value = "name", required = false) String name) {
         System.out.println("欢迎访问HelloController里的testPathVariable方法！id:" + id + "         name:" + name);
         return "success";
     }
@@ -222,8 +222,9 @@ public class AnnoController {
         sessionStatus.setComplete();// 清空
         return "success";
     }
+
     @RequestMapping(value = "a")
-    public ModelAndView a(){
+    public ModelAndView a() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("anno");
         return modelAndView;

@@ -12,8 +12,8 @@ import java.util.Scanner;//导入Scanner类
  */
 // 客户端类
 public class SocketClient {//创建公共类
-    private String host = "localhost";// 默认连接到本机
-    private int port = 6000;// 默认连接到端口8189
+    private String host = "hello.shenzhuo.vip";// 默认连接到本机
+    private int port = 12162;// 默认连接到端口8189
 
     public SocketClient() {
 
@@ -45,7 +45,7 @@ public class SocketClient {//创建公共类
                 out.write(new byte[]{00,00,00,00,00,00});
                 out.write(new byte[]{9,00});
                 out.write(new byte[]{02});
-                out.write(new byte[]{21,01,01,20,04,03,9,25,33});
+                out.write(new byte[]{21,01,64,20,04,03,9,25,33});
                 out.write(new byte[]{00});
                 out.write("##".getBytes());
                 socket.shutdownOutput();

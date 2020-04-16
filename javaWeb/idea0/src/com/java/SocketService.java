@@ -55,10 +55,10 @@ class ServerThread extends Thread {
                     return;
                 }
                 dataInputStream=new DataInputStream(socket.getInputStream());
-                writeOK();
 //                String s = dataInputStream.readUTF();
 //                System.out.println(s);
                 byte[] bytes = readInputStream(dataInputStream);
+                writeOK();
                 /*byte[] bytes = new byte[1024];
                 int len=0;
                 while ((len=dataInputStream.read(bytes))!=-1){
@@ -73,23 +73,27 @@ class ServerThread extends Thread {
                 System.out.println("命令字节：" + b);
                 byte b1 = bytes[27];
                 System.out.println("类型标志：" + b1);
-//                if (b !=2 || b1 !=21){
-//                    writeOK();
-//                    return;
-//                }
+                if (b !=2 || b1 !=21){
+                    return;
+                }
 //                int i = byte2ToUnsignedShort(bytes, 24);
 //                System.out.println(i);
                 int n = bytes[28];
                 System.out.println("信息对象数目：" + n);
                 for (int i1 = 0; i1 < n; i1++) {
-                    byte[] bytes1 = byteArraycopy(bytes, 29+(i1*7), 7);
+                    byte[] bytes1 = new byte[0];
+                    try {
+                        bytes1 = byteArraycopy(bytes, 29+(i1*7), 7);
+                    } catch (Exception e) {
+                        System.out.println("信息对象数目大于实际数目");
+                        e.printStackTrace();
+                    }
                     int type = bytes1[0];
                     System.out.println("设备状态：" + type);
                     String s = ByteToDate(bytes1, 1);
-                    System.out.println(s);
+                    System.out.println("上报时间：" + s);
                     dataProcess(type,s);
                 }
-//                writeOK();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,7 +107,12 @@ class ServerThread extends Thread {
         }
     }
 
-    //读取数据
+    /**
+     * 读取数据（解决数据不完整问题）
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
     public static  byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024*2];
         int len = 0;
@@ -124,14 +133,25 @@ class ServerThread extends Thread {
         socket.shutdownOutput();
     }
 
-    //拷贝btye数组
+    /**
+     * 拷贝byte数组
+     * @param bytes 源数组
+     * @param srcPos 起始位置
+     * @param length 拷贝长度
+     * @return
+     */
     private static byte[] byteArraycopy(byte[] bytes,int srcPos,int length){
         byte[] bytes1 = new byte[length];
         System.arraycopy(bytes,srcPos,bytes1,0,length);
         return bytes1;
     }
 
-    //将byte 中6个字节转换为时间
+    /**
+     * 将byte 中6个字节转换为时间
+     * @param bytes 源数组
+     * @param i 时间的起始位置
+     * @return
+     */
     private static String ByteToDate(byte[] bytes,int i) {
         String str=bytes[i]+"-"+bytes[i+1]+"-"+bytes[i+2]+" "+bytes[i+3]+":"+bytes[i+4]+":"+bytes[i+5];
         return DateUtils.setDate(str);
@@ -154,12 +174,9 @@ class ServerThread extends Thread {
 
     /**
      * 低字节在前，byte数组转换为无符号short整数,并按16进制转换为10进制
-     *
-     * @param bytes
-     *            byte数组
-     * @param off
-     *            开始位置
-     * @return short整数
+     * @param bytes byte数组
+     * @param off 开始位置
+     * @return int整数
      */
     public static int byte2ToUnsignedShort(byte[] bytes, int off) {
         int i = (bytes[off + 1] << 8 & 0xFFFF) | (bytes[off] & 0xFF);
@@ -167,6 +184,11 @@ class ServerThread extends Thread {
         return Integer.parseUnsignedInt(s,16);
     }
 
+    /**
+     * 信息入库
+     * @param type 类型
+     * @param time 时间
+     */
     private void dataProcess(int type,String time){
         // type：1正常，2火警，3故障，4主电故障，5备电故障，6通信信道故障，7连接线路故障
         if (type==1){

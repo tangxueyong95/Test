@@ -34,7 +34,7 @@ public class JainSipClient {
 
 	private Dialog dialog;
 
-	static String ip = "192.168.10.21";
+	static String ip = "192.168.10.220";
 	static int port = 5069;
 	static String uname="tang";
 
@@ -50,7 +50,7 @@ public class JainSipClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        client.sendSubscribe("Tom","192.168.10.21:5060",message);
+        client.sendSubscribe("Tom","192.168.10.220:5070",message);
 //		String message1 = "<?xml version=\"1.0\"?><Notify><CmdType>Alarm</CmdType><SN>17430</SN><DeviceID>34020000001110000001</DeviceID><StartAlarmPriority>1</StartAlarmPriority><EndAlarmPriority>4</EndAlarmPriority><AlarmMethod>0</AlarmMethod><StartTime>2010-11-11T00:00:00</StartTime><EndTime>2010-12-11T00:00:00</EndTime></Notify>";
 //		client.sendNotify("Tom","172.31.104.60:5070",message1);
 //		client.sendMessage("Tom","172.31.104.60:5060",message);
