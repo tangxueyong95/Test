@@ -109,7 +109,11 @@ public class POIUtils {
         //如果当前单元格内容为日期类型，需要特殊处理
         String dataFormatString = cell.getCellStyle().getDataFormatString();
         if(dataFormatString.equals("m/d/yy")){
-            cellValue = new SimpleDateFormat(DATE_FORMAT).format(cell.getDateCellValue());
+            try {
+                cellValue = new SimpleDateFormat(DATE_FORMAT).format(cell.getDateCellValue());
+            } catch (Exception e) {
+                cellValue = cell.getStringCellValue();
+            }
             return cellValue;
         }
         //把数字当成String来读，避免出现1读成1.0的情况
