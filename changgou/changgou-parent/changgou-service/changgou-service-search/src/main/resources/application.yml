@@ -7,7 +7,7 @@ spring:
     #ES链接配置
     elasticsearch:
       cluster-name: my-application
-      cluster-nodes: 192.168.211.132:9300
+      cluster-nodes: 127.0.0.1:9300
 eureka:
   client:
     service-url:

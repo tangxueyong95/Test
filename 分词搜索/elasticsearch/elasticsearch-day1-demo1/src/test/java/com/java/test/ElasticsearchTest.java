@@ -37,14 +37,15 @@ public class ElasticsearchTest {
         client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"),9300));
 
         //2.构建数据XContentBuilder，构建数据节点->Document对象->Field域
-        XContentBuilder builder = XContentFactory.jsonBuilder().startObject();//开始构建节点对象
+        XContentBuilder builder = XContentFactory.jsonBuilder();
+        builder.startObject();//开始构建节点对象
         builder.field("id",1);
         builder.field("title","ElasticSearch是一个基于Lucene的搜索服务器。");
         builder.field("content","它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。");
         builder.endObject();
 
         //3.使用TransportClient对象，将构建的数据增加到ES索引库去  id:唯一标识,相当于数据库表的主键
-        client.prepareIndex("blog","article","1").setSource(builder).get(); //get相当于执行操作
+        client.prepareIndex("ceshi","String","2").setSource(builder).get(); //get相当于执行操作
 
         //4.回收资源
         client.close();
@@ -71,7 +72,7 @@ public class ElasticsearchTest {
         map.put("content","2-它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。");
 
         //3.使用TransportClient对象，将构建的数据增加到ES索引库去  id:唯一标识,相当于数据库表的主键
-        client.prepareIndex("blog","article","2").setSource(map).get(); //get相当于执行操作
+        client.prepareIndex("blog","article","3").setSource(map).get(); //get相当于执行操作
 
         //4.回收资源
         client.close();
@@ -129,6 +130,9 @@ public class ElasticsearchTest {
         //总记录数
         long totalHits = hits.getTotalHits();
 
+        for (SearchHit hit : hits) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+        }
         //获取数据结果集
         Iterator<SearchHit> iterator = hits.iterator();
         while (iterator.hasNext()){
