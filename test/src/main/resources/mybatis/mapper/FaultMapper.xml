@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.dao.FaultDao">
+    <insert id="insertFault">
+        insert into a_fault(
+        deviceid,devicename,detectorname,companyid,imei,status,statustypeid,starttime,content)
+        values (
+        #{deviceid},#{devicename},#{detectorname},#{companyid},#{imei},#{status},#{statustypeid},SYSDATE(),#{content})
+    </insert>
+
+    <select id="findAFaultList" resultType="com.example.test.entity.AFault">
+        SELECT * FROM a_fault
+    </select>
+
+</mapper>

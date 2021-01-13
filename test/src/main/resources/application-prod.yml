@@ -1,0 +1,61 @@
+server:
+  port: 8059
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.10.55:3306/ifcsdb_new?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+#    url: jdbc:mysql://127.0.0.1:3306/ifcsdb_new?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://10.178.69.137:3306/IFCSDB_NEW?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+#    username: root
+#    password: '!fzb_dahua2019'
+#  redis:
+#    database: 0
+#    host: 127.0.0.1
+#    port: 6379
+#    jedis:
+#      pool:
+#        max-active: 100
+#        max-idle: 10
+#    timeout: 5000ms
+
+  #mongodb配置
+#  data:
+#    mongodb:
+#      uri: mongodb://127.0.0.1:27017/congge
+#      username: root
+#      password: root
+
+  #rabbitmq配置
+  rabbitmq:
+    host: 192.168.10.55
+    port: 5672
+    username: admin
+    password: admin
+    publisher-confirms: true    #启动消息确认
+    #    publisher-returns: true
+    listener:
+      direct:
+        acknowledge-mode: auto  #客户端自动确认消息
+    template:
+      mandatory: true
+mybatis:
+  type-aliases-package: com.zr.firecontrol.firecontrolprovider
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+#canal配置
+canal:
+  client:
+    instances:
+      example:
+        host: 127.0.0.1
+        port: 11111

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.dao.DeviceDao">
+
+    <select id="getDevicemessage" resultType="java.util.Map">
+        SELECT d.deviceid,d.companyid,d.devicename FROM d_device d WHERE d.devicecode= #{imei}
+    </select>
+
+    <insert id="register" keyProperty="deviceid" useGeneratedKeys="true" parameterType="com.example.test.entity.DeviceEntity">
+        insert into d_device (
+        devicecode,devicename,devicetypeid,statustypeid,chargeNum,
+        imsi,companyid,producerid,createtime,lat,lng)
+        values (
+        #{imei},#{imei},#{nbDeviceType},#{status},'tmp_count',
+        #{imsi},#{companyid},#{producerid},SYSDATE(),#{lat},#{lon})
+    </insert>
+
+    <insert id="registerNb" parameterType="com.example.test.entity.DeviceEntity">
+        insert into fcm_nb_device (
+        deviceid,sn_code,imsi,device_status,installer,
+        device_name,nb_device_type,longitude,companyid,
+        latitude,lat,unit_base_id,producer_id,create_time,install_time)
+        values (
+        #{deviceid},#{imei},#{imsi},#{status},'tmp_count',
+        #{imei},#{nbDeviceType},#{lon},#{companyid},
+        #{lat},#{lat},#{unitbaseid},#{producerid},SYSDATE(),str_to_date(#{installTime}, '%Y-%m-%d %H:%i:%s'))
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM d_device WHERE chargeNum='tmp_count'
+    </delete>
+
+    <delete id="deleteNB">
+        DELETE FROM fcm_nb_device WHERE installer='tmp_count'
+    </delete>
+
+    <update id="upStatus">
+        UPDATE d_device SET statustypeid=#{status} WHERE devicecode=#{imei}
+    </update>
+
+    <update id="upNBStatus">
+        UPDATE fcm_nb_device SET device_status=#{status} WHERE sn_code=#{imei}
+    </update>
+
+    <insert id="deviceAdd" keyProperty="deviceid" useGeneratedKeys="true" parameterType="java.util.Map">
+        <selectKey resultType="String" order="AFTER" keyProperty="deviceid">
+            SELECT LAST_INSERT_ID() as deviceid
+        </selectKey>
+        insert into d_device(
+        devicecode, devicename, devicetypeid,installperson,
+        systemAddress,createtime,companyid,statustypeid,
+        producerid,platformid,lat,lng,registertime
+        )
+        values (
+        #{devicecode},#{devicename}, #{devicetypeid},#{installperson},
+        #{systemAddress},SYSDATE(), #{companyid},#{statustypeid},
+        #{producerid},#{platformid}, #{lat},#{lng},#{registertime}
+        )
+    </insert>
+
+    <insert id="deviceAddNB" >
+        insert into fcm_nb_device(
+        unit_base_id, producer_id, nb_device_type,deviceid, device_name,
+        sn_code, device_status,install_time, installer, create_time,
+        ext,companyid,latitude,longitude
+        )
+        values (
+        #{unit_base_id},#{producer_id}, #{nb_device_type},#{deviceid},#{device_name},
+        #{sn_code},#{device_status}, #{install_time},#{installer},SYSDATE(),
+        #{ext},#{companyid}, #{latitude},#{longitude}
+        )
+    </insert>
+</mapper>

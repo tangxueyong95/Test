@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.dao.EventDao">
+    <insert id="insertEvent">
+        insert into a_event(
+        deviceid,devicename,companyid,detectorname,
+        starttime,eventstatus,alarmtypeid,imei,createtime,eventcontent,eventtypeid
+        )
+        values (
+        #{deviceid},#{devicename},#{companyid},#{detectorname},
+        #{starttime},#{eventstatus},#{alarmtypeid},#{imei},SYSDATE(),#{eventcontent},#{eventtypeid}
+        )
+    </insert>
+
+    <select id="findAEventList" resultType="com.example.test.entity.AEvent">
+        SELECT * FROM a_event
+    </select>
+
+</mapper>

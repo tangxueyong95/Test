@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.dao.AAnalogValueDeviceDao">
+
+    <insert id="save" parameterType="com.example.test.entity.AAnalogValueDevice">
+        insert into a_analog_value_device(
+        deviceid, value, createtime, channelno, partunitloopcode,
+        analog_value_type_id, analog_status_id, companyid, projectid,imei)
+        values (
+        #{deviceid}, #{value}, SYSDATE(), #{channelno}, #{partunitloopcode},
+        #{analogValueTypeId}, #{analogStatusId}, #{companyid}, #{projectid},#{imei})
+    </insert>
+
+    <select id="findByImei"  resultType="java.util.Map">
+        select * from d_device WHERE devicecode=#{imei}
+    </select>
+</mapper>
