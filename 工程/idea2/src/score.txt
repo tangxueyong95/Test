@@ -1,7 +1,0 @@
-lisi=80;
-lishi=90;
-
-#lisi,80->lisi<90
-#Fri Apr 12 10:38:06 CST 2019
-lisi=90
-lishi=90;

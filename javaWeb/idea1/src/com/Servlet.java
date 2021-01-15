@@ -12,10 +12,12 @@ import java.util.Map;
 
 @WebServlet("/1")
 public class Servlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //解决请求参数的中文乱码问题
         request.setCharacterEncoding("UTF-8");
